@@ -1,4 +1,26 @@
 import type { loadConfig } from "../config/config.js";
+import { loadGatewayTlsRuntime } from "../infra/tls/gateway.js";
+
+/**
+ * Resolve TLS fingerprint for gateway probes.
+ * Remote mode: use cfg.gateway.remote.tlsFingerprint.
+ * Local mode with TLS enabled: load the local cert fingerprint.
+ */
+export async function resolveGatewayProbeTlsFingerprint(
+  cfg: ReturnType<typeof loadConfig>,
+): Promise<string | undefined> {
+  const isRemoteMode = cfg.gateway?.mode === "remote";
+  if (isRemoteMode) {
+    const fp = cfg.gateway?.remote?.tlsFingerprint;
+    return typeof fp === "string" && fp.trim().length > 0 ? fp.trim() : undefined;
+  }
+  // Local mode: check if gateway TLS is enabled and load the runtime fingerprint
+  if (cfg.gateway?.tls?.enabled === true) {
+    const runtime = await loadGatewayTlsRuntime(cfg.gateway.tls).catch(() => undefined);
+    return runtime?.enabled ? runtime.fingerprintSha256 : undefined;
+  }
+  return undefined;
+}
 
 export function resolveGatewayProbeAuth(cfg: ReturnType<typeof loadConfig>): {
   token?: string;

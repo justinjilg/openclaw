@@ -30,6 +30,7 @@ import { getAgentLocalStatuses } from "./status-all/agents.js";
 import { buildChannelsTable } from "./status-all/channels.js";
 import { formatDuration, formatGatewayAuthUsed } from "./status-all/format.js";
 import { pickGatewaySelfPresence } from "./status-all/gateway.js";
+import { resolveGatewayProbeTlsFingerprint } from "./status.gateway-probe.js";
 import { buildStatusAllReportLines } from "./status-all/report-lines.js";
 
 export async function statusAllCommand(
@@ -156,9 +157,11 @@ export async function statusAllCommand(
     const remoteAuth = resolveProbeAuth("remote");
     const probeAuth = isRemoteMode && !remoteUrlMissing ? remoteAuth : localFallbackAuth;
 
+    const tlsFingerprint = await resolveGatewayProbeTlsFingerprint(cfg).catch(() => undefined);
     const gatewayProbe = await probeGateway({
       url: connection.url,
       auth: probeAuth,
+      tlsFingerprint,
       timeoutMs: Math.min(5000, opts?.timeoutMs ?? 10_000),
     }).catch(() => null);
     const gatewayReachable = gatewayProbe?.ok === true;

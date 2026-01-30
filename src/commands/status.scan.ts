@@ -10,7 +10,11 @@ import type { MemoryIndexManager } from "../memory/manager.js";
 import { runExec } from "../process/exec.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { getAgentLocalStatuses } from "./status.agent-local.js";
-import { pickGatewaySelfPresence, resolveGatewayProbeAuth } from "./status.gateway-probe.js";
+import {
+  pickGatewaySelfPresence,
+  resolveGatewayProbeAuth,
+  resolveGatewayProbeTlsFingerprint,
+} from "./status.gateway-probe.js";
 import { getStatusSummary } from "./status.summary.js";
 import { getUpdateCheckResult } from "./status.update.js";
 import { buildChannelsTable } from "./status-all/channels.js";
@@ -110,11 +114,15 @@ export async function scanStatus(
         typeof cfg.gateway?.remote?.url === "string" ? cfg.gateway.remote.url : "";
       const remoteUrlMissing = isRemoteMode && !remoteUrlRaw.trim();
       const gatewayMode = isRemoteMode ? "remote" : "local";
+      const tlsFingerprint = remoteUrlMissing
+        ? undefined
+        : await resolveGatewayProbeTlsFingerprint(cfg).catch(() => undefined);
       const gatewayProbe = remoteUrlMissing
         ? null
         : await probeGateway({
             url: gatewayConnection.url,
             auth: resolveGatewayProbeAuth(cfg),
+            tlsFingerprint,
             timeoutMs: Math.min(opts.all ? 5000 : 2500, opts.timeoutMs ?? 10_000),
           }).catch(() => null);
       const gatewayReachable = gatewayProbe?.ok === true;

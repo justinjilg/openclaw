@@ -35,6 +35,7 @@ function formatError(err: unknown): string {
 export async function probeGateway(opts: {
   url: string;
   auth?: GatewayProbeAuth;
+  tlsFingerprint?: string;
   timeoutMs: number;
 }): Promise<GatewayProbeResult> {
   const startedAt = Date.now();
@@ -57,6 +58,7 @@ export async function probeGateway(opts: {
       url: opts.url,
       token: opts.auth?.token,
       password: opts.auth?.password,
+      tlsFingerprint: opts.tlsFingerprint,
       clientName: GATEWAY_CLIENT_NAMES.CLI,
       clientVersion: "dev",
       mode: GATEWAY_CLIENT_MODES.PROBE,

@@ -21,6 +21,7 @@ import {
   resolveTargets,
   sanitizeSshTarget,
 } from "./gateway-status/helpers.js";
+import { resolveGatewayProbeTlsFingerprint } from "./status.gateway-probe.js";
 
 export async function gatewayStatusCommand(
   opts: {
@@ -143,6 +144,7 @@ export async function gatewayStatusCommand(
         : baseTargets;
 
       try {
+        const tlsFingerprint = await resolveGatewayProbeTlsFingerprint(cfg).catch(() => undefined);
         const probed = await Promise.all(
           targets.map(async (target) => {
             const auth = resolveAuthForTarget(cfg, target, {
@@ -153,6 +155,7 @@ export async function gatewayStatusCommand(
             const probe = await probeGateway({
               url: target.url,
               auth,
+              tlsFingerprint,
               timeoutMs,
             });
             const configSummary = probe.configSnapshot

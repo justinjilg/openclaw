@@ -8,6 +8,7 @@ import { resolveGatewayAuth } from "../gateway/auth.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { buildGatewayConnectionDetails } from "../gateway/call.js";
 import { probeGateway } from "../gateway/probe.js";
+import { loadGatewayTlsRuntime } from "../infra/tls/gateway.js";
 import {
   collectAttackSurfaceSummaryFindings,
   collectExposureMatrixFindings,
@@ -833,17 +834,33 @@ async function maybeProbeGateway(params: {
   };
 
   const auth = !isRemoteMode || remoteUrlMissing ? resolveAuth("local") : resolveAuth("remote");
-  const res = await params.probe({ url, auth, timeoutMs: params.timeoutMs }).catch((err) => ({
-    ok: false,
-    url,
-    connectLatencyMs: null,
-    error: String(err),
-    close: null,
-    health: null,
-    status: null,
-    presence: null,
-    configSnapshot: null,
-  }));
+
+  // Resolve TLS fingerprint so probes work with self-signed certs
+  const tlsFingerprint = await (async () => {
+    if (isRemoteMode) {
+      const fp = params.cfg.gateway?.remote?.tlsFingerprint;
+      return typeof fp === "string" && fp.trim().length > 0 ? fp.trim() : undefined;
+    }
+    if (params.cfg.gateway?.tls?.enabled === true) {
+      const runtime = await loadGatewayTlsRuntime(params.cfg.gateway.tls).catch(() => undefined);
+      return runtime?.enabled ? runtime.fingerprintSha256 : undefined;
+    }
+    return undefined;
+  })();
+
+  const res = await params
+    .probe({ url, auth, tlsFingerprint, timeoutMs: params.timeoutMs })
+    .catch((err) => ({
+      ok: false,
+      url,
+      connectLatencyMs: null,
+      error: String(err),
+      close: null,
+      health: null,
+      status: null,
+      presence: null,
+      configSnapshot: null,
+    }));
 
   return {
     gateway: {
