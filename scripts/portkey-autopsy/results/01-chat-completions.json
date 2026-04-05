@@ -1,0 +1,77 @@
+{
+  "script": "01-chat-completions",
+  "timestamp": "2026-03-21T14:44:57.724Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "chat.completions.create (non-streaming)",
+      "status": "PASS",
+      "latency_ms": 727,
+      "notes": "",
+      "response_preview": "Hello!"
+    },
+    {
+      "name": "chat.completions.create (streaming)",
+      "status": "PASS",
+      "latency_ms": 2907,
+      "notes": "",
+      "response_preview": "1, 2, 3."
+    },
+    {
+      "name": "chat.completions.create (response_format: json_object)",
+      "status": "PASS",
+      "latency_ms": 688,
+      "notes": "",
+      "response_preview": "{\"color\":\"blue\"}"
+    },
+    {
+      "name": "chat.completions.create (tool calling)",
+      "status": "PASS",
+      "latency_ms": 684,
+      "notes": "",
+      "response_preview": "{\"tool_calls\":1,\"function_name\":\"get_weather\"}"
+    },
+    {
+      "name": "chat.completions.create (multi-turn)",
+      "status": "PASS",
+      "latency_ms": 512,
+      "notes": "",
+      "response_preview": "Your name is Alice."
+    },
+    {
+      "name": "chat.completions.create (seed for determinism)",
+      "status": "PASS",
+      "latency_ms": 945,
+      "notes": "",
+      "response_preview": "{\"response1\":\"test123\",\"response2\":\"test123\",\"fingerprint1\":\"fp_81e478f1c3\",\"fingerprint2\":\"fp_81e478f1c3\"}"
+    },
+    {
+      "name": "chat.completions.create (stop sequences)",
+      "status": "PASS",
+      "latency_ms": 737,
+      "notes": "",
+      "response_preview": "You've counted from 1 to 10! If you need assistance with anything related to counting or numbers, feel free to ask!"
+    },
+    {
+      "name": "chat.completions.create (n=2 choices)",
+      "status": "PASS",
+      "latency_ms": 529,
+      "notes": "",
+      "response_preview": "{\"choices\":2,\"c0\":\"Sure! The random number I pick is 57\",\"c1\":\"Sure! The random number I picked is 42\"}"
+    },
+    {
+      "name": "chat.completions — usage tokens returned",
+      "status": "PASS",
+      "latency_ms": 444,
+      "notes": "",
+      "response_preview": "{\"prompt_tokens\":8,\"completion_tokens\":5,\"total_tokens\":13}"
+    },
+    {
+      "name": "chat.completions — portkey trace headers",
+      "status": "PASS",
+      "latency_ms": 635,
+      "notes": "",
+      "response_preview": "{\"model\":\"gpt-4o-mini-2024-07-18\",\"id\":\"chatcmpl-DLrrNdfZu6iA2FS0Hutta7YCytFuo\",\"object\":\"chat.completion\"}"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "script": "02-chat-completions",
+  "timestamp": "2026-03-21T18:09:01.854Z",
+  "platform": "openrouter",
+  "tests": [
+    {
+      "name": "openrouter/auto — non-streaming",
+      "status": "PASS",
+      "latency_ms": 5885,
+      "notes": "",
+      "response_preview": "{\"model_used\":\"google/gemini-2.5-flash-lite\",\"content\":\"Hi\",\"usage\":{\"prompt_tokens\":6,\"completion_tokens\":1,\"total_tokens\":7,\"cost\":0.000001,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0"
+    },
+    {
+      "name": "openrouter/free — non-streaming",
+      "status": "PASS",
+      "latency_ms": 2236,
+      "notes": "",
+      "response_preview": "{\"model_used\":\"nvidia/nemotron-3-super-120b-a12b-20230311:free\",\"content\":null}"
+    },
+    {
+      "name": "google/gemini-2.0-flash-001 — non-streaming",
+      "status": "PASS",
+      "latency_ms": 818,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.0-flash-001\",\"content\":\"Hello.\\n\"}"
+    },
+    {
+      "name": "openrouter/auto — streaming",
+      "status": "PASS",
+      "latency_ms": 5278,
+      "notes": "",
+      "response_preview": "{\"chunks\":4,\"preview\":\"data: {\\\"id\\\":\\\"gen-1774116508-ggNi3lKzjnVSldJHt4TJ\\\",\\\"object\\\":\\\"chat.completion.chunk\\\",\\\"created\\\":1774116513,\\\"model\\\":\\\"google/gemini-2.5-flash-lite\\\",\\\"provid\"}"
+    },
+    {
+      "name": "structured output (json_object)",
+      "status": "PASS",
+      "latency_ms": 5533,
+      "notes": "",
+      "response_preview": "{\"content\":\"{\\\"color\\\":\\\"blue\\\"}\"}"
+    },
+    {
+      "name": "tool calling",
+      "status": "PASS",
+      "latency_ms": 5568,
+      "notes": "",
+      "response_preview": "{\"tool_calls\":1,\"name\":\"get_weather\"}"
+    },
+    {
+      "name": "multi-turn conversation",
+      "status": "PASS",
+      "latency_ms": 5604,
+      "notes": "",
+      "response_preview": "{\"content\":\"Your name is Alice.\"}"
+    },
+    {
+      "name": "model fallback (array)",
+      "status": "FAIL",
+      "latency_ms": 59,
+      "notes": "400: {\"error\":{\"message\":\"nonexistent/model is not a valid model ID\",\"code\":400},\"user_id\":\"user_38u3mpVpaxNeWOU3ADXJx4IjGnE\"}",
+      "response_preview": null
+    },
+    {
+      "name": "provider routing (sort: throughput)",
+      "status": "PASS",
+      "latency_ms": 5664,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.5-flash-lite\",\"content\":\"Hi there! How can I help you today? 😊\"}"
+    },
+    {
+      "name": "usage tokens returned",
+      "status": "PASS",
+      "latency_ms": 5774,
+      "notes": "",
+      "response_preview": "{\"prompt_tokens\":1,\"completion_tokens\":5,\"total_tokens\":6,\"cost\":0.0000021,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_de"
+    }
+  ]
+}

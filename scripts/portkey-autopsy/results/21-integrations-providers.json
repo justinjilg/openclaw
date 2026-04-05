@@ -1,0 +1,21 @@
+{
+  "script": "21-integrations-providers",
+  "timestamp": "2026-03-21T17:42:22.473Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "integrations.list",
+      "status": "PASS",
+      "latency_ms": 343,
+      "notes": "",
+      "response_preview": "{\"count\":1}"
+    },
+    {
+      "name": "providers.list",
+      "status": "PASS",
+      "latency_ms": 176,
+      "notes": "",
+      "response_preview": "{\"count\":2}"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "script": "07-responses",
+  "timestamp": "2026-03-21T14:47:29.755Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "responses.create (basic)",
+      "status": "PASS",
+      "latency_ms": 998,
+      "notes": "",
+      "response_preview": "{\"id\":\"resp_07ee0dbc5f9247040069beaf7ef65c819c871998925a6adf30\",\"output_text\":\"Hello!\",\"status\":\"completed\"}"
+    },
+    {
+      "name": "responses.create (streaming)",
+      "status": "PASS",
+      "latency_ms": 1071,
+      "notes": "",
+      "response_preview": "{\"events_received\":16}"
+    },
+    {
+      "name": "responses.create (with tools)",
+      "status": "PASS",
+      "latency_ms": 1035,
+      "notes": "",
+      "response_preview": "{\"id\":\"resp_0b94b8c5d24de8940069beaf812ab88192a47ec8eac8a011e2\",\"output_length\":1,\"status\":\"completed\"}"
+    }
+  ]
+}

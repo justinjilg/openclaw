@@ -1,0 +1,35 @@
+{
+  "script": "01-key-models",
+  "timestamp": "2026-03-21T18:08:17.813Z",
+  "platform": "openrouter",
+  "tests": [
+    {
+      "name": "GET /key (check credits + limits)",
+      "status": "PASS",
+      "latency_ms": 438,
+      "notes": "",
+      "response_preview": "{\"data\":{\"label\":\"sk-or-v1-c44...8e3\",\"is_management_key\":false,\"is_provisioning_key\":false,\"limit\":5,\"limit_reset\":\"monthly\",\"limit_remaining\":5,\"include_byok_in_limit\":false,\"usage\":0,\"usage_daily\":"
+    },
+    {
+      "name": "GET /models (full catalog)",
+      "status": "PASS",
+      "latency_ms": 142,
+      "notes": "",
+      "response_preview": "{\"total_models\":350,\"providers\":55,\"provider_list\":[\"ai21\",\"aion-labs\",\"alfredpros\",\"alibaba\",\"allenai\",\"alpindale\",\"amazon\",\"anthracite-org\",\"anthropic\",\"arcee-ai\",\"baidu\",\"bytedance\",\"bytedance-seed"
+    },
+    {
+      "name": "GET /models — free models count",
+      "status": "PASS",
+      "latency_ms": 189,
+      "notes": "",
+      "response_preview": "{\"free_models\":27,\"sample\":[\"nvidia/nemotron-3-super-120b-a12b:free\",\"minimax/minimax-m2.5:free\",\"openrouter/free\",\"stepfun/step-3.5-flash:free\",\"arcee-ai/trinity-large-preview:free\"]}"
+    },
+    {
+      "name": "GET /models — model metadata structure",
+      "status": "PASS",
+      "latency_ms": 399,
+      "notes": "",
+      "response_preview": "{\"keys\":[\"id\",\"canonical_slug\",\"hugging_face_id\",\"name\",\"created\",\"description\",\"context_length\",\"architecture\",\"pricing\",\"top_provider\",\"per_request_limits\",\"supported_parameters\",\"default_parameters"
+    }
+  ]
+}

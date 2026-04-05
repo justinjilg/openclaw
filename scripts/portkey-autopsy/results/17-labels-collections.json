@@ -1,0 +1,56 @@
+{
+  "script": "17-labels-collections",
+  "timestamp": "2026-03-21T17:44:53.284Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "labels.create",
+      "status": "PASS",
+      "latency_ms": 387,
+      "notes": "",
+      "response_preview": "{\"slug\":\"0b8120eb-384a-4f06-ae6e-4969c4de6e02\",\"keys\":[\"id\",\"object\",\"getHeaders\"]}"
+    },
+    {
+      "name": "labels.list",
+      "status": "PASS",
+      "latency_ms": 190,
+      "notes": "",
+      "response_preview": "{\"count\":5}"
+    },
+    {
+      "name": "labels.retrieve",
+      "status": "PASS",
+      "latency_ms": 173,
+      "notes": "",
+      "response_preview": "{\"name\":\"autopsy-label-1774115091649\"}"
+    },
+    {
+      "name": "labels.delete",
+      "status": "PASS",
+      "latency_ms": 171,
+      "notes": "",
+      "response_preview": "deleted"
+    },
+    {
+      "name": "collections.create",
+      "status": "PASS",
+      "latency_ms": 348,
+      "notes": "",
+      "response_preview": "{\"slug\":\"co-autops-0c5b4b\",\"keys\":[\"id\",\"slug\",\"object\",\"getHeaders\"]}"
+    },
+    {
+      "name": "collections.list",
+      "status": "PASS",
+      "latency_ms": 167,
+      "notes": "",
+      "response_preview": "{\"count\":3}"
+    },
+    {
+      "name": "collections.delete",
+      "status": "PASS",
+      "latency_ms": 198,
+      "notes": "",
+      "response_preview": "deleted"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+# Secrets — never commit
+.env
+*.key
+*.pem
+
+# OpenClaw runtime data (agent-generated files)
+workspace/*
+!workspace/.gitkeep
+!workspace/workspaces/
+!workspace/skills/
+workspace/workspaces/*/daily-report-*.md
+workspace/workspaces/*/audit-log-*.md
+workspace/workspaces/*/research-*.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml

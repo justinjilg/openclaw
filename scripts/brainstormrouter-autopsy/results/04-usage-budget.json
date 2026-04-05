@@ -1,0 +1,42 @@
+{
+  "script": "04-usage-budget",
+  "timestamp": "2026-03-21T17:54:09.284Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "GET /v1/usage/by-cost-center (admin)",
+      "status": "PASS",
+      "latency_ms": 316,
+      "notes": "",
+      "response_preview": "{\"period\":\"month\",\"since\":\"2026-03-01T00:00:00.000Z\",\"data\":[{\"cost_center\":\"unassigned\",\"request_count\":548,\"total_input_tokens\":2306071,\"total_output_tokens\":40272,\"total_cost_usd\":35.303585,\"avg_la"
+    },
+    {
+      "name": "GET /v1/usage/by-cost-center?cost_center=openclaw-fleet",
+      "status": "PASS",
+      "latency_ms": 116,
+      "notes": "",
+      "response_preview": "{\"period\":\"month\",\"since\":\"2026-03-01T00:00:00.000Z\",\"data\":[{\"cost_center\":\"unassigned\",\"request_count\":548,\"total_input_tokens\":2306071,\"total_output_tokens\":40272,\"total_cost_usd\":35.303585,\"avg_la"
+    },
+    {
+      "name": "GET /v1/agent/limits (admin)",
+      "status": "TIER_RESTRICTED",
+      "latency_ms": 108,
+      "notes": "403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permissions.\"}}",
+      "response_preview": null
+    },
+    {
+      "name": "GET /v1/insights/daily (admin)",
+      "status": "PASS",
+      "latency_ms": 117,
+      "notes": "",
+      "response_preview": "{\"status\":\"ready\",\"date\":\"2026-03-21\",\"summary\":{\"requestCount\":49,\"totalCostUsd\":8.836475,\"totalInputTokens\":570949,\"totalOutputTokens\":3712,\"cacheHitRate\":0,\"avgLatencyMs\":1347},\"models\":[{\"model\":\""
+    },
+    {
+      "name": "GET /v1/cost-forecast (admin)",
+      "status": "PASS",
+      "latency_ms": 107,
+      "notes": "",
+      "response_preview": "endpoint_probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1"
+    }
+  ]
+}

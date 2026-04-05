@@ -1,0 +1,63 @@
+{
+  "script": "03-providers-routing",
+  "timestamp": "2026-03-21T18:09:45.074Z",
+  "platform": "openrouter",
+  "tests": [
+    {
+      "name": "GET model endpoints (anthropic/claude-sonnet-4)",
+      "status": "PASS",
+      "latency_ms": 203,
+      "notes": "",
+      "response_preview": "{\"data\":{\"id\":\"anthropic/claude-sonnet-4\",\"name\":\"Anthropic: Claude Sonnet 4\",\"created\":1747930371,\"description\":\"Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonnet 3.7"
+    },
+    {
+      "name": "GET /endpoints/zdr (zero data retention)",
+      "status": "PASS",
+      "latency_ms": 100,
+      "notes": "",
+      "response_preview": "{\"count\":\"not_array\"}"
+    },
+    {
+      "name": ":nitro variant (throughput optimized)",
+      "status": "PASS",
+      "latency_ms": 5385,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.5-flash-lite\"}"
+    },
+    {
+      "name": ":floor variant (cheapest)",
+      "status": "PASS",
+      "latency_ms": 5321,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.5-flash-lite\"}"
+    },
+    {
+      "name": ":online variant (web search)",
+      "status": "PASS",
+      "latency_ms": 7119,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.5-flash-lite\",\"content\":\"Today's date is Friday, March 20, 2026. [calendarr.com](https://www.calendarr\"}"
+    },
+    {
+      "name": "provider only: [anthropic]",
+      "status": "FAIL",
+      "latency_ms": 5051,
+      "notes": "404: {\"error\":{\"message\":\"No allowed providers are available for the selected model.\",\"code\":404,\"metadata\":{\"available_providers\":[\"google-vertex\",\"google-ai-studio\",\"deepinfra\",\"novita\",\"chutes\",\"silicon",
+      "response_preview": null
+    },
+    {
+      "name": "provider ignore: [openai]",
+      "status": "PASS",
+      "latency_ms": 5461,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.5-flash-lite\"}"
+    },
+    {
+      "name": "ZDR enforcement (zdr: true)",
+      "status": "PASS",
+      "latency_ms": 5642,
+      "notes": "",
+      "response_preview": "{\"model\":\"google/gemini-2.5-flash-lite\"}"
+    }
+  ]
+}

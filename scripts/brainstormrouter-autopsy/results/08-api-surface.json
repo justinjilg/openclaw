@@ -1,0 +1,182 @@
+{
+  "script": "08-api-surface",
+  "timestamp": "2026-03-21T17:54:31.254Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "GET /health (none)",
+      "status": "PASS",
+      "latency_ms": 304,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"status\\\":\\\"ok\\\",\\\"db\\\":true,\\\"redis\\\":true,\\\"uptime\\\":165,\\\"version\\\":\\\"0.1.0\\\"}\"}"
+    },
+    {
+      "name": "GET /v1/agent/profiles (admin)",
+      "status": "PASS",
+      "latency_ms": 123,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"profiles\\\":[{\\\"id\\\":\\\"dca50325-a0e3-4542-9e78-0915af5c6274\\\",\\\"tenantId\\\":\\\"4b490b54-5b2c-49d9-b621-1580851a956c\\\",\\\"agentId\\\":\\\"oc-ops\\\",\\\"displayName\\\""
+    },
+    {
+      "name": "GET /v1/usage/by-cost-center (admin)",
+      "status": "PASS",
+      "latency_ms": 113,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"period\\\":\\\"month\\\",\\\"since\\\":\\\"2026-03-01T00:00:00.000Z\\\",\\\"data\\\":[{\\\"cost_center\\\":\\\"unassigned\\\",\\\"request_count\\\":548,\\\"total_input_tokens\\\":2306071,"
+    },
+    {
+      "name": "GET /v1/agent/limits (admin)",
+      "status": "PASS",
+      "latency_ms": 109,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/providers (admin)",
+      "status": "PASS",
+      "latency_ms": 121,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"providers\\\":[{\\\"id\\\":\\\"51753997-e8f7-4427-bd02-b3f348c6d104\\\",\\\"provider\\\":\\\"anthropic\\\",\\\"masked_key\\\":\\\"sk-ant-...lAAA\\\",\\\"status\\\":\\\"active\\\",\\\"create"
+    },
+    {
+      "name": "GET /v1/providers/catalog (admin)",
+      "status": "PASS",
+      "latency_ms": 108,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"providers\\\":[{\\\"id\\\":\\\"openai\\\",\\\"name\\\":\\\"OpenAI\\\",\\\"api\\\":\\\"openai-completions\\\",\\\"base_url\\\":\\\"https://api.openai.com/v1\\\",\\\"env_key\\\":\\\"OPENAI_API_KE"
+    },
+    {
+      "name": "GET /v1/tenants (admin)",
+      "status": "PASS",
+      "latency_ms": 112,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/tenants/current (admin)",
+      "status": "PASS",
+      "latency_ms": 112,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/keys (admin)",
+      "status": "PASS",
+      "latency_ms": 112,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/keys/list (admin)",
+      "status": "PASS",
+      "latency_ms": 117,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/config (admin)",
+      "status": "PASS",
+      "latency_ms": 113,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"data\\\":{}}\"}"
+    },
+    {
+      "name": "GET /v1/settings (admin)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/audit-log (admin)",
+      "status": "PASS",
+      "latency_ms": 112,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/webhooks (admin)",
+      "status": "PASS",
+      "latency_ms": 122,
+      "notes": "",
+      "response_preview": "{\"status\":200,\"exists\":true,\"data_preview\":\"{\\\"webhooks\\\":[],\\\"total\\\":0}\"}"
+    },
+    {
+      "name": "GET /v1/alerts (admin)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/budgets (admin)",
+      "status": "PASS",
+      "latency_ms": 115,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/sessions (admin)",
+      "status": "PASS",
+      "latency_ms": 110,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/memory (admin)",
+      "status": "PASS",
+      "latency_ms": 109,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/memory/list (admin)",
+      "status": "PASS",
+      "latency_ms": 119,
+      "notes": "",
+      "response_preview": "{\"status\":404,\"exists\":false,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Not found: GET /v1/memory/list\\\",\\\"type\\\":\\\"not_found\\\"}}\"}"
+    },
+    {
+      "name": "GET /v1/agent/bootstrap (admin)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "GET /v1/agent/status (admin)",
+      "status": "PASS",
+      "latency_ms": 124,
+      "notes": "",
+      "response_preview": "{\"status\":401,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"type\\\":\\\"auth_error\\\",\\\"message\\\":\\\"Agent identity required (JWT or mTLS)\\\"},\\\"recovery\\\":{\\\"action\\\":\\\"authenticate\\\",\\\"endpoint\\\":\\\"POST /v1"
+    },
+    {
+      "name": "POST /v1/embeddings (scoped)",
+      "status": "PASS",
+      "latency_ms": 258,
+      "notes": "",
+      "response_preview": "{\"status\":400,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Invalid model reference: \\\\\\\"test\\\\\\\"\\\",\\\"type\\\":\\\"invalid_request_error\\\"},\\\"recovery\\\":{\\\"action\\\":\\\"check_request\\\",\\\"docs_url\\"
+    },
+    {
+      "name": "POST /v1/images/generations (scoped)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "POST /v1/moderations (scoped)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    },
+    {
+      "name": "POST /v1/audio/speech (scoped)",
+      "status": "PASS",
+      "latency_ms": 112,
+      "notes": "",
+      "response_preview": "{\"status\":403,\"exists\":true,\"data_preview\":\"{\\\"error\\\":{\\\"message\\\":\\\"Forbidden\\\",\\\"type\\\":\\\"insufficient_permissions\\\",\\\"hint\\\":\\\"Use GET /v1/rbac/my-permissions to see your available permissions.\\\"}"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "script": "06-audio",
+  "timestamp": "2026-03-21T14:47:19.622Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "audio.speech.create (TTS)",
+      "status": "PASS",
+      "latency_ms": 1412,
+      "notes": "",
+      "response_preview": "{\"bytes\":12960,\"has_audio\":true}"
+    },
+    {
+      "name": "audio.transcriptions.create (whisper)",
+      "status": "FAIL",
+      "latency_ms": 357,
+      "notes": "400 openai error: [{'type': 'missing', 'loc': ('body', 'file'), 'msg': 'Field required', 'input': None}]",
+      "response_preview": null
+    }
+  ]
+}

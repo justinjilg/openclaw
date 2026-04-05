@@ -1,0 +1,21 @@
+{
+  "script": "09-models",
+  "timestamp": "2026-03-21T14:47:57.926Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "models.list (via provider client)",
+      "status": "PASS",
+      "latency_ms": 790,
+      "notes": "",
+      "response_preview": "{\"count\":129,\"first\":\"gpt-4-0613\"}"
+    },
+    {
+      "name": "models.list (via admin client, no provider)",
+      "status": "PASS",
+      "latency_ms": 425,
+      "notes": "",
+      "response_preview": "admin_models_requires_provider: 403 status code (no body)"
+    }
+  ]
+}

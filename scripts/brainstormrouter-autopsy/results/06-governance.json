@@ -1,0 +1,56 @@
+{
+  "script": "06-governance",
+  "timestamp": "2026-03-21T17:54:16.060Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "GET /v1/ops/status (admin)",
+      "status": "PASS",
+      "latency_ms": 327,
+      "notes": "",
+      "response_preview": "{\"status\":\"ready\",\"timestamp\":\"2026-03-21T17:54:15.334Z\",\"endpoints\":{\"total\":304,\"healthy\":216,\"degraded\":0,\"unhealthy\":0,\"noData\":88,\"items\":[{\"id\":\"openai::ada-v2\",\"provider\":\"openai\",\"modelId\":\"ad"
+    },
+    {
+      "name": "GET /v1/agent/anomaly (admin)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permiss"
+    },
+    {
+      "name": "GET /v1/behavioral-profiles (admin)",
+      "status": "PASS",
+      "latency_ms": 116,
+      "notes": "",
+      "response_preview": "probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permiss"
+    },
+    {
+      "name": "GET /v1/leaderboard (admin)",
+      "status": "PASS",
+      "latency_ms": 111,
+      "notes": "",
+      "response_preview": "probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permiss"
+    },
+    {
+      "name": "GET /v1/governance (admin)",
+      "status": "PASS",
+      "latency_ms": 145,
+      "notes": "",
+      "response_preview": "probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permiss"
+    },
+    {
+      "name": "GET /v1/agent/manifests (admin)",
+      "status": "PASS",
+      "latency_ms": 126,
+      "notes": "",
+      "response_preview": "probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permiss"
+    },
+    {
+      "name": "GET /v1/memory/compliance (admin)",
+      "status": "PASS",
+      "latency_ms": 123,
+      "notes": "",
+      "response_preview": "probe: 404 Not Found: {\"error\":{\"message\":\"Not found: GET /v1/memory/compliance\",\"type\":\"not_found\"}}"
+    }
+  ]
+}

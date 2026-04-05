@@ -1,0 +1,35 @@
+{
+  "script": "16-logs",
+  "timestamp": "2026-03-21T17:41:38.766Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "logs.create (manual log insert)",
+      "status": "PASS",
+      "latency_ms": 411,
+      "notes": "",
+      "response_preview": "ok"
+    },
+    {
+      "name": "logs.exports.create",
+      "status": "FAIL",
+      "latency_ms": 279,
+      "notes": "{\"success\":false,\"data\":{\"message\":\"Validation failed: undefined: Invalid value, undefined: Invalid value, undefined: Invalid value, undefined: Invalid value\",\"errorCode\":\"AB01\",\"request_id\":\"321afe76-3583-469f-a463-8848dd3d0210\",\"error_details\":[{\"msg\":\"Invalid value\",\"param\":\"filters.time_of_gener",
+      "response_preview": null
+    },
+    {
+      "name": "logs.exports.list",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "Cannot destructure property 'workspaceId' of '_body' as it is undefined.",
+      "response_preview": null
+    },
+    {
+      "name": "logs.exports.retrieve",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No export to retrieve",
+      "response_preview": null
+    }
+  ]
+}

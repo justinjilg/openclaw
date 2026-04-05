@@ -1,0 +1,174 @@
+###############################################################################
+# OpenClaw — Hardened Docker Compose
+#
+# Security layers applied:
+#   - Loopback-only port binding (no external access)
+#   - Non-root user (node/UID 1000)
+#   - All Linux capabilities dropped
+#   - no-new-privileges
+#   - Custom seccomp profile (syscall allowlist)
+#   - Resource limits (memory, CPU, PIDs)
+#   - Ulimits (prevent fork bombs)
+#   - Log rotation
+#
+# Usage:
+#   1. ./start.sh up        (injects secrets from 1Password, starts gateway)
+#   2. ./start.sh doctor    (security audit)
+###############################################################################
+
+services:
+  openclaw-gateway:
+    image: ghcr.io/openclaw/openclaw:2026.3.28
+    container_name: openclaw-gateway
+    restart: unless-stopped
+    command: ["openclaw", "gateway", "--verbose"]
+
+    ports:
+      # Bind to loopback ONLY — never expose on 0.0.0.0
+      - "127.0.0.1:18789:18789"   # Gateway (WebSocket + HTTP + Control UI)
+      - "127.0.0.1:18790:18790"   # Bridge
+
+    volumes:
+      # Mount config + workspace to /home/node (container's node user home)
+      - ${OPENCLAW_CONFIG_DIR}:/home/node/.openclaw
+      - ${OPENCLAW_WORKSPACE:-./workspace}:/home/node/workspace
+      # Cross-project read-only access (Phase 3: agent workforce)
+      - ${PROJECTS_DIR:-~/Projects}:/home/node/projects
+
+    environment:
+      - HOME=/home/node
+      # Auth token — injected at runtime from 1Password via start.sh
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      # LLM provider credentials
+      - MOONSHOT_API_KEY=${MOONSHOT_API_KEY}
+      - BRAINSTORMROUTER_API_KEY=${BRAINSTORMROUTER_API_KEY}
+      - BRAINSTORMROUTER_ADMIN_KEY=${BRAINSTORMROUTER_ADMIN_KEY}
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      # WhatsApp bridge needs more heap than Node.js default
+      - NODE_OPTIONS=--max-old-space-size=1792
+      # Disable insecure private WebSocket
+      - OPENCLAW_ALLOW_INSECURE_PRIVATE_WS=false
+      # Startup optimization (from openclaw doctor)
+      - OPENCLAW_NO_RESPAWN=1
+
+    # Run as non-root (node user = UID 1000)
+    user: "1000:1000"
+
+    # Drop all capabilities
+    cap_drop:
+      - ALL
+
+    # Prevent privilege escalation + custom seccomp syscall filter
+    security_opt:
+      - no-new-privileges:true
+      # - seccomp:openclaw-seccomp.json  # TODO: needs syscall audit for v2026.3.12 (sched_*, clone3, etc.)
+
+    # Prevent fork bombs
+    ulimits:
+      nproc: 256
+      nofile:
+        soft: 8192
+        hard: 16384
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: "2.0"
+          pids: 256
+        reservations:
+          memory: 512m
+
+    healthcheck:
+      test: ["CMD", "curl", "-4sf", "http://127.0.0.1:18789/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # --- Community Dashboard (tugcantopaloglu/openclaw-dashboard) ---
+  openclaw-dashboard:
+    image: ghcr.io/tugcantopaloglu/openclaw-dashboard:latest
+    container_name: openclaw-dashboard
+    restart: unless-stopped
+    profiles: ["dashboard"]
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - OPENCLAW_GATEWAY_URL=http://openclaw-gateway:18789
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - DASHBOARD_MFA_ENABLED=true
+      - NODE_ENV=production
+    depends_on:
+      openclaw-gateway:
+        condition: service_healthy
+    user: "1000:1000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: "0.5"
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  # --- Custom BR-Integrated Dashboard ---
+  br-dashboard:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: br-dashboard
+    restart: unless-stopped
+    profiles: ["dashboard"]
+    ports:
+      - "127.0.0.1:3001:8080"
+    volumes:
+      - ./workspace/dashboard:/usr/share/nginx/html:ro
+    depends_on:
+      openclaw-gateway:
+        condition: service_healthy
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+          cpus: "0.25"
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  openclaw-cli:
+    image: ghcr.io/openclaw/openclaw:2026.3.28
+    container_name: openclaw-cli
+    profiles: ["cli"]
+    volumes:
+      - ${OPENCLAW_CONFIG_DIR}:/home/node/.openclaw
+      - ${OPENCLAW_WORKSPACE:-./workspace}:/home/node/workspace
+      - ${PROJECTS_DIR:-~/Projects}:/home/node/projects
+    environment:
+      - HOME=/home/node
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - MOONSHOT_API_KEY=${MOONSHOT_API_KEY}
+      - BRAINSTORMROUTER_API_KEY=${BRAINSTORMROUTER_API_KEY}
+      - BRAINSTORMROUTER_ADMIN_KEY=${BRAINSTORMROUTER_ADMIN_KEY}
+    user: "1000:1000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

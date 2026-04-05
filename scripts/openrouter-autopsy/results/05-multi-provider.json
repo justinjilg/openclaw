@@ -1,0 +1,84 @@
+{
+  "script": "05-multi-provider",
+  "timestamp": "2026-03-21T18:10:23.580Z",
+  "platform": "openrouter",
+  "tests": [
+    {
+      "name": "OpenAI / openai/gpt-4.1-nano",
+      "status": "FAIL",
+      "latency_ms": 1827,
+      "notes": "400: {\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Invalid 'max_output_tokens': integer below minimum value. Expected a value >= 16, but ",
+      "response_preview": null
+    },
+    {
+      "name": "Anthropic / anthropic/claude-haiku-4-5-20251001",
+      "status": "FAIL",
+      "latency_ms": 161,
+      "notes": "400: {\"error\":{\"message\":\"anthropic/claude-haiku-4-5-20251001 is not a valid model ID\",\"code\":400},\"user_id\":\"user_38u3mpVpaxNeWOU3ADXJx4IjGnE\"}",
+      "response_preview": null
+    },
+    {
+      "name": "Google / google/gemini-2.0-flash-001",
+      "status": "PASS",
+      "latency_ms": 715,
+      "notes": "",
+      "response_preview": "{\"provider\":\"Google\",\"model_returned\":\"google/gemini-2.0-flash-001\",\"content\":\"Hello.\\n\",\"usage\":{\"prompt_tokens\":6,\"completion_tokens\":3,\"total_tokens\":9,\"cost\":0.0000018,\"is_byok\":false,\"prompt_toke"
+    },
+    {
+      "name": "DeepSeek / deepseek/deepseek-chat",
+      "status": "PASS",
+      "latency_ms": 572,
+      "notes": "",
+      "response_preview": "{\"provider\":\"DeepSeek\",\"model_returned\":\"deepseek/deepseek-chat-v3\",\"content\":\"Hello!\",\"usage\":{\"prompt_tokens\":9,\"completion_tokens\":3,\"total_tokens\":12,\"cost\":0.00000555,\"is_byok\":false,\"prompt_toke"
+    },
+    {
+      "name": "Meta/Llama / meta-llama/llama-3.1-8b-instruct:free",
+      "status": "FAIL",
+      "latency_ms": 55,
+      "notes": "404: {\"error\":{\"message\":\"No endpoints found for meta-llama/llama-3.1-8b-instruct:free.\",\"code\":404},\"user_id\":\"user_38u3mpVpaxNeWOU3ADXJx4IjGnE\"}",
+      "response_preview": null
+    },
+    {
+      "name": "Mistral / mistralai/mistral-small-3.1-24b-instruct:free",
+      "status": "FAIL",
+      "latency_ms": 294,
+      "notes": "429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"mistralai/mistral-small-3.1-24b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own ke",
+      "response_preview": null
+    },
+    {
+      "name": "Qwen / qwen/qwen3-8b:free",
+      "status": "FAIL",
+      "latency_ms": 45,
+      "notes": "404: {\"error\":{\"message\":\"No endpoints found for qwen/qwen3-8b:free.\",\"code\":404},\"user_id\":\"user_38u3mpVpaxNeWOU3ADXJx4IjGnE\"}",
+      "response_preview": null
+    },
+    {
+      "name": "OpenAI — streaming",
+      "status": "PASS",
+      "latency_ms": 683,
+      "notes": "",
+      "response_preview": "{\"chunks\":11}"
+    },
+    {
+      "name": "Anthropic — streaming",
+      "status": "PASS",
+      "latency_ms": 50,
+      "notes": "",
+      "response_preview": "{\"chunks\":0}"
+    },
+    {
+      "name": "Google — streaming",
+      "status": "PASS",
+      "latency_ms": 549,
+      "notes": "",
+      "response_preview": "{\"chunks\":6}"
+    },
+    {
+      "name": "DeepSeek — streaming",
+      "status": "PASS",
+      "latency_ms": 1476,
+      "notes": "",
+      "response_preview": "{\"chunks\":14}"
+    }
+  ]
+}

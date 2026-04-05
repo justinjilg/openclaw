@@ -1,0 +1,28 @@
+{
+  "script": "15-feedback",
+  "timestamp": "2026-03-21T17:40:55.253Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "feedback.create (single)",
+      "status": "PASS",
+      "latency_ms": 662,
+      "notes": "",
+      "response_preview": "{\"status\":\"success\",\"message\":\"Feedback successfully saved\",\"feedback_ids\":[\"4d0e59cc-9e0d-4bfb-8dfc-6cc2e33f81a4\"]}"
+    },
+    {
+      "name": "feedback.update",
+      "status": "FAIL",
+      "latency_ms": 788,
+      "notes": "Invalid Feedback Id passed. Nothing to update",
+      "response_preview": null
+    },
+    {
+      "name": "feedback.create (batch)",
+      "status": "FAIL",
+      "latency_ms": 58,
+      "notes": "Portkey Error: Invalid Request Body. Error code: 032",
+      "response_preview": null
+    }
+  ]
+}

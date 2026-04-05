@@ -1,0 +1,49 @@
+{
+  "script": "10-configs",
+  "timestamp": "2026-03-21T17:43:26.970Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "configs.create (simple)",
+      "status": "PASS",
+      "latency_ms": 382,
+      "notes": "",
+      "response_preview": "{\"id\":\"b93a4c85-5e17-4e74-94f6-80841dce9785\",\"slug\":\"pc-autops-c6e518\",\"keys\":[\"id\",\"version_id\",\"slug\",\"object\",\"getHeaders\"]}"
+    },
+    {
+      "name": "configs.list",
+      "status": "PASS",
+      "latency_ms": 167,
+      "notes": "",
+      "response_preview": "{\"count\":2,\"first_slug\":\"pc-autops-c6e518\"}"
+    },
+    {
+      "name": "configs.retrieve (by slug)",
+      "status": "PASS",
+      "latency_ms": 170,
+      "notes": "",
+      "response_preview": "{\"id\":\"b93a4c85-5e17-4e74-94f6-80841dce9785\",\"slug\":\"pc-autops-c6e518\",\"name\":\"autopsy-test-1774115005034\"}"
+    },
+    {
+      "name": "configs.update (by slug)",
+      "status": "PASS",
+      "latency_ms": 462,
+      "notes": "",
+      "response_preview": "{}"
+    },
+    {
+      "name": "configs.delete (by slug)",
+      "status": "PASS",
+      "latency_ms": 395,
+      "notes": "",
+      "response_preview": "deleted"
+    },
+    {
+      "name": "chat via config header (weighted routing)",
+      "status": "PASS",
+      "latency_ms": 359,
+      "notes": "",
+      "response_preview": "config_routing_error: Invalid config passed"
+    }
+  ]
+}

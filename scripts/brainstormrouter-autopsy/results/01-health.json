@@ -1,0 +1,21 @@
+{
+  "script": "01-health",
+  "timestamp": "2026-03-21T17:53:40.523Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "GET /health (no auth)",
+      "status": "PASS",
+      "latency_ms": 496,
+      "notes": "",
+      "response_preview": "{\"status\":\"ok\",\"db\":true,\"redis\":true,\"uptime\":117,\"version\":\"0.1.0\"}"
+    },
+    {
+      "name": "GET /health (IPv4 check)",
+      "status": "PASS",
+      "latency_ms": 110,
+      "notes": "",
+      "response_preview": "{\"status\":\"ok\"}"
+    }
+  ]
+}

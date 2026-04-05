@@ -1,0 +1,105 @@
+{
+  "script": "30-multi-provider-matrix",
+  "timestamp": "2026-03-21T14:49:28.737Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "openai / gpt-4o-mini — chat completion",
+      "status": "PASS",
+      "latency_ms": 882,
+      "notes": "",
+      "response_preview": "{\"provider\":\"openai\",\"model_returned\":\"gpt-4o-mini-2024-07-18\",\"content\":\"Hello!\",\"prompt_tokens\":13,\"completion_tokens\":2}"
+    },
+    {
+      "name": "anthropic / claude-haiku-4-5-20251001 — chat completion",
+      "status": "PASS",
+      "latency_ms": 943,
+      "notes": "",
+      "response_preview": "{\"provider\":\"anthropic\",\"model_returned\":\"claude-haiku-4-5-20251001\",\"content\":\"Hello.\",\"prompt_tokens\":13,\"completion_tokens\":5}"
+    },
+    {
+      "name": "google / gemini-2.0-flash-lite — chat completion",
+      "status": "FAIL",
+      "latency_ms": 507,
+      "notes": "{\"error\":{\"message\":\"google error: This model models/gemini-2.0-flash-lite is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.\",\"type\":\"NOT_FOUND\",\"param\":null,\"code\":404},\"provider\":\"google\"}",
+      "response_preview": null
+    },
+    {
+      "name": "groq / llama-3.1-8b-instant — chat completion",
+      "status": "PASS",
+      "latency_ms": 275,
+      "notes": "",
+      "response_preview": "{\"provider\":\"groq\",\"model_returned\":\"llama-3.1-8b-instant\",\"content\":\"Hello\",\"prompt_tokens\":41,\"completion_tokens\":2}"
+    },
+    {
+      "name": "deepseek / deepseek-chat — chat completion",
+      "status": "PASS",
+      "latency_ms": 1930,
+      "notes": "",
+      "response_preview": "{\"provider\":\"deepseek\",\"model_returned\":\"deepseek-chat\",\"content\":\"Hi\",\"prompt_tokens\":10,\"completion_tokens\":1}"
+    },
+    {
+      "name": "moonshot / moonshot-v1-8k — chat completion",
+      "status": "FAIL",
+      "latency_ms": 352,
+      "notes": "{\"error\":{\"message\":\"Invalid response received from moonshot: {\\\"error\\\":{\\\"message\\\":\\\"Invalid Authentication\\\",\\\"type\\\":\\\"invalid_authentication_error\\\"}}\",\"type\":null,\"param\":null,\"code\":null},\"provider\":\"moonshot\"}",
+      "response_preview": null
+    },
+    {
+      "name": "perplexity-ai / sonar — chat completion",
+      "status": "PASS",
+      "latency_ms": 1531,
+      "notes": "",
+      "response_preview": "{\"provider\":\"perplexity-ai\",\"model_returned\":\"sonar\",\"content\":\"**Hello**[1][2][3]\",\"prompt_tokens\":7,\"completion_tokens\":10}"
+    },
+    {
+      "name": "openai / gpt-4o-mini — streaming",
+      "status": "PASS",
+      "latency_ms": 787,
+      "notes": "",
+      "response_preview": "{\"provider\":\"openai\",\"chunks\":10,\"text\":\"1, 2, 3.\"}"
+    },
+    {
+      "name": "anthropic / claude-haiku-4-5-20251001 — streaming",
+      "status": "PASS",
+      "latency_ms": 541,
+      "notes": "",
+      "response_preview": "{\"provider\":\"anthropic\",\"chunks\":5,\"text\":\"1\\n2\\n3\"}"
+    },
+    {
+      "name": "google / gemini-2.0-flash-lite — streaming",
+      "status": "FAIL",
+      "latency_ms": 482,
+      "notes": "{\"error\":{\"message\":\"Invalid response received from google: [{\\\"error\\\":{\\\"code\\\":404,\\\"message\\\":\\\"This model models/gemini-2.0-flash-lite is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.\\\",\\\"status\\\":\\\"NOT_FOUND\\\"}}]\",\"type",
+      "response_preview": null
+    },
+    {
+      "name": "groq / llama-3.1-8b-instant — streaming",
+      "status": "PASS",
+      "latency_ms": 231,
+      "notes": "",
+      "response_preview": "{\"provider\":\"groq\",\"chunks\":10,\"text\":\"1. \\n2. \\n3.\"}"
+    },
+    {
+      "name": "deepseek / deepseek-chat — streaming",
+      "status": "PASS",
+      "latency_ms": 2049,
+      "notes": "",
+      "response_preview": "{\"provider\":\"deepseek\",\"chunks\":10,\"text\":\"1… 2… 3!\"}"
+    },
+    {
+      "name": "moonshot / moonshot-v1-8k — streaming",
+      "status": "FAIL",
+      "latency_ms": 335,
+      "notes": "{\"error\":{\"message\":\"Invalid response received from moonshot: {\\\"error\\\":{\\\"message\\\":\\\"Invalid Authentication\\\",\\\"type\\\":\\\"invalid_authentication_error\\\"}}\",\"type\":null,\"param\":null,\"code\":null},\"provider\":\"moonshot\"}",
+      "response_preview": null
+    },
+    {
+      "name": "perplexity-ai / sonar — streaming",
+      "status": "PASS",
+      "latency_ms": 1380,
+      "notes": "",
+      "response_preview": "{\"provider\":\"perplexity-ai\",\"chunks\":14,\"text\":\"**1, 2, 3.**[1][2][3][4]\\n\\n\"}"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"error":{"message":"Forbidden","type":"insufficient_permissions","hint":"Use GET /v1/rbac/my-permissions to see your available permissions."}}

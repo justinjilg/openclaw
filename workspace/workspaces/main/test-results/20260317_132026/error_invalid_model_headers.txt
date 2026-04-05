@@ -1,0 +1,36 @@
+HTTP/2 400 
+date: Tue, 17 Mar 2026 13:20:33 GMT
+content-type: application/json
+set-cookie: AWSALB=xmXrnCtYbeNos6n8DMQRrnJbbMtmXkVHiT9DAGCTKxaLH7UR6RW2l8okPORFBZvix7FCnqbGKSyDXq2EX6SCEROD/ClHqgmYP2KGKUc9/jLCCznOL4GmxA/iFT16; Expires=Tue, 24 Mar 2026 13:20:32 GMT; Path=/
+set-cookie: AWSALBCORS=xmXrnCtYbeNos6n8DMQRrnJbbMtmXkVHiT9DAGCTKxaLH7UR6RW2l8okPORFBZvix7FCnqbGKSyDXq2EX6SCEROD/ClHqgmYP2KGKUc9/jLCCznOL4GmxA/iFT16; Expires=Tue, 24 Mar 2026 13:20:32 GMT; Path=/; SameSite=None; Secure
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+access-control-allow-origin: *
+access-control-expose-headers: *
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+link: <https://api.brainstormrouter.com/openapi.json>; rel="service-desc", <https://brainstormrouter.com/llms.txt>; rel="describedby", <https://brainstormrouter.com/llms-agent-playbook.txt>; rel="getting-started", </v1/mcp/connect>; rel="mcp-server", </v1/self>; rel="self-awareness", <https://brainstormrouter.com/.well-known/agents.json>; rel="agent-discovery"
+permissions-policy: geolocation=(), camera=(), microphone=()
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-br-cache: miss
+x-br-deprecation: null-scope-keys-default-to-developer
+x-br-estimated-cost: 0.0000
+x-br-estimated-cost-cents: 0
+x-br-guardian-status: on
+x-br-guardrail-status: pass
+x-br-model-contract: strict
+x-br-recovery-action: check_request
+x-br-recovery-docs: https://brainstormrouter.com/llms-agent-playbook.txt#phase-3
+x-budget-limit: 14.5
+x-budget-remaining: 14.499997
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 112
+x-ratelimit-reset: 60
+x-request-id: 31c8a0de-cf77-44fe-9ebf-965177ca7134
+cf-cache-status: DYNAMIC
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=ZhbiwKzQEHotzvFGq2EAf5egs0AYJ1uFnupqNs1ild4ESNpoyCcXjtN%2B1THHO6IPi95TZURHQLlSNRrgi3vCN7fppxlSFViB3cYaNVa228P3nsUDUZY%3D"}]}
+server: cloudflare
+cf-ray: 9ddc4baaea778b1f-MIA
+alt-svc: h3=":443"; ma=86400
+

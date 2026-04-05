@@ -1,0 +1,14 @@
+{
+  "script": "20-api-keys",
+  "timestamp": "2026-03-21T17:42:14.202Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "apiKeys.list",
+      "status": "PASS",
+      "latency_ms": 308,
+      "notes": "",
+      "response_preview": "{\"count\":2}"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "script": "13-guardrails",
+  "timestamp": "2026-03-21T17:44:31.770Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "guardrails.list",
+      "status": "PASS",
+      "latency_ms": 723,
+      "notes": "",
+      "response_preview": "{\"count\":1,\"keys\":[\"object\",\"total\",\"data\",\"getHeaders\"]}"
+    },
+    {
+      "name": "guardrails.create",
+      "status": "FAIL",
+      "latency_ms": 170,
+      "notes": "{\"success\":false,\"data\":{\"message\":\"Validation failed: undefined: Invalid value\",\"errorCode\":\"AB01\",\"request_id\":\"9af94d7e-a0d0-4609-b46f-770f75fb1a1a\",\"error_details\":[{\"value\":[{\"type\":\"block\",\"on\":\"fail\"}],\"msg\":\"Invalid value\",\"param\":\"actions\",\"location\":\"body\"}]}}",
+      "response_preview": null
+    },
+    {
+      "name": "guardrails.retrieve",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No guardrail to retrieve",
+      "response_preview": null
+    },
+    {
+      "name": "guardrails.update",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No guardrail to update",
+      "response_preview": null
+    },
+    {
+      "name": "guardrails.delete",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No guardrail to delete",
+      "response_preview": null
+    }
+  ]
+}

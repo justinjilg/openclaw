@@ -1,0 +1,28 @@
+{
+  "script": "22-metadata-tracing",
+  "timestamp": "2026-03-21T14:54:05.322Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "chat with custom traceID",
+      "status": "PASS",
+      "latency_ms": 703,
+      "notes": "",
+      "response_preview": "{\"trace_id\":\"autopsy-trace-1774104843759\",\"response\":\"Hello! How can I\"}"
+    },
+    {
+      "name": "chat with custom metadata",
+      "status": "PASS",
+      "latency_ms": 459,
+      "notes": "",
+      "response_preview": "{\"metadata_sent\":{\"environment\":\"test\",\"script\":\"22-metadata\",\"user_id\":\"autopsy-bot\"},\"response\":\"Hello! How can I\"}"
+    },
+    {
+      "name": "chat with traceID + metadata combined",
+      "status": "PASS",
+      "latency_ms": 399,
+      "notes": "",
+      "response_preview": "{\"content\":\"Hello! How can I\"}"
+    }
+  ]
+}

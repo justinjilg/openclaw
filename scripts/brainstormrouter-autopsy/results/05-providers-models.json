@@ -1,0 +1,35 @@
+{
+  "script": "05-providers-models",
+  "timestamp": "2026-03-21T17:54:12.405Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "GET /v1/providers/catalog (admin)",
+      "status": "PASS",
+      "latency_ms": 397,
+      "notes": "",
+      "response_preview": "{\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"api\":\"openai-completions\",\"base_url\":\"https://api.openai.com/v1\",\"env_key\":\"OPENAI_API_KEY\",\"discoverable\":true,\"auth\":\"api-key\"},{\"id\":\"anthropic\",\"name\""
+    },
+    {
+      "name": "GET /v1/models (admin)",
+      "status": "PASS",
+      "latency_ms": 177,
+      "notes": "",
+      "response_preview": "{\"count\":304,\"sample\":[{\"id\":\"openai/ada-v2\",\"object\":\"model\",\"owned_by\":\"openai\",\"x_model_router\":{\"pricing\":{\"input\":0.1,\"output\":0},\"capabilities\":[],\"endpoints\":1}},{\"id\":\"openai/babbage-002\",\"obj"
+    },
+    {
+      "name": "GET /v1/models (scoped key)",
+      "status": "PASS",
+      "latency_ms": 112,
+      "notes": "",
+      "response_preview": "{\"count\":304}"
+    },
+    {
+      "name": "GET /v1/agent/list (admin)",
+      "status": "PASS",
+      "latency_ms": 115,
+      "notes": "",
+      "response_preview": "probe: 403 Forbidden: {\"error\":{\"message\":\"Forbidden\",\"type\":\"insufficient_permissions\",\"hint\":\"Use GET /v1/rbac/my-permissions to see your available permiss"
+    }
+  ]
+}

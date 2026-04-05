@@ -1,0 +1,1 @@
+{"error":{"message":"Invalid model reference: \"nonexistent-model-12345\"","type":"invalid_request_error"},"recovery":{"action":"check_request","docs_url":"https://brainstormrouter.com/llms-agent-playbook.txt#phase-3","message":"Invalid request. Check the API reference for correct parameters."}}

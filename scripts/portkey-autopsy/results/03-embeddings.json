@@ -1,0 +1,35 @@
+{
+  "script": "03-embeddings",
+  "timestamp": "2026-03-21T14:46:22.270Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "embeddings.create (single string)",
+      "status": "PASS",
+      "latency_ms": 741,
+      "notes": "",
+      "response_preview": "{\"dimensions\":1536,\"model\":\"text-embedding-3-small\",\"usage\":{\"prompt_tokens\":4,\"total_tokens\":4}}"
+    },
+    {
+      "name": "embeddings.create (array input)",
+      "status": "PASS",
+      "latency_ms": 470,
+      "notes": "",
+      "response_preview": "{\"count\":2,\"dim0\":1536,\"dim1\":1536}"
+    },
+    {
+      "name": "embeddings.create (custom dimensions)",
+      "status": "PASS",
+      "latency_ms": 810,
+      "notes": "",
+      "response_preview": "{\"dimensions\":256}"
+    },
+    {
+      "name": "embeddings.create (base64 encoding)",
+      "status": "PASS",
+      "latency_ms": 240,
+      "notes": "",
+      "response_preview": "{\"encoding\":\"base64\"}"
+    }
+  ]
+}

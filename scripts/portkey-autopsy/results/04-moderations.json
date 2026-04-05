@@ -1,0 +1,28 @@
+{
+  "script": "04-moderations",
+  "timestamp": "2026-03-21T14:46:32.482Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "moderations.create (flagged input)",
+      "status": "PASS",
+      "latency_ms": 880,
+      "notes": "",
+      "response_preview": "{\"flagged\":true,\"violence\":true}"
+    },
+    {
+      "name": "moderations.create (safe input)",
+      "status": "PASS",
+      "latency_ms": 357,
+      "notes": "",
+      "response_preview": "{\"flagged\":false}"
+    },
+    {
+      "name": "moderations.create (multi-input array)",
+      "status": "PASS",
+      "latency_ms": 1098,
+      "notes": "",
+      "response_preview": "{\"count\":2,\"first_flagged\":false,\"second_flagged\":false}"
+    }
+  ]
+}

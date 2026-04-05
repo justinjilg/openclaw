@@ -1,0 +1,56 @@
+{
+  "script": "04-plugins-features",
+  "timestamp": "2026-03-21T18:10:15.576Z",
+  "platform": "openrouter",
+  "tests": [
+    {
+      "name": "web-search plugin",
+      "status": "FAIL",
+      "latency_ms": 325,
+      "notes": "400: {\"error\":{\"message\":\"plugins.0.id: Invalid input\",\"code\":400},\"user_id\":\"user_38u3mpVpaxNeWOU3ADXJx4IjGnE\"}",
+      "response_preview": null
+    },
+    {
+      "name": "response-healing plugin",
+      "status": "PASS",
+      "latency_ms": 5773,
+      "notes": "",
+      "response_preview": "{\"content\":\"{\\\"name\\\": \\\"test\\\"}\"}"
+    },
+    {
+      "name": "prompt caching (check usage details)",
+      "status": "FAIL",
+      "latency_ms": 275,
+      "notes": "400: {\"error\":{\"message\":\"anthropic/claude-haiku-4-5-20251001 is not a valid model ID\",\"code\":400},\"user_id\":\"user_38u3mpVpaxNeWOU3ADXJx4IjGnE\"}",
+      "response_preview": null
+    },
+    {
+      "name": "vision — image URL",
+      "status": "FAIL",
+      "latency_ms": 9355,
+      "notes": "400: {\"error\":{\"message\":\"Received 530 status code when fetching image from URL: https://via.placeholder.com/100/FF0000/FFFFFF?text=Red\",\"code\":400,\"metadata\":{\"provider_name\":\"Google\"}},\"user_id\":\"user_38",
+      "response_preview": null
+    },
+    {
+      "name": "stop sequences",
+      "status": "PASS",
+      "latency_ms": 5621,
+      "notes": "",
+      "response_preview": "{\"content\":\"That's a clear and correct count! You've listed the integers from 1 to 10.\"}"
+    },
+    {
+      "name": "seed for determinism",
+      "status": "PASS",
+      "latency_ms": 5745,
+      "notes": "",
+      "response_preview": "{\"content\":\"test123\"}"
+    },
+    {
+      "name": "GET /openapi.json (API spec)",
+      "status": "PASS",
+      "latency_ms": 1262,
+      "notes": "",
+      "response_preview": "{\"openapi_version\":\"3.1.0\",\"paths_count\":28,\"title\":\"OpenRouter API\"}"
+    }
+  ]
+}

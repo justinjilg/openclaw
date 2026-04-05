@@ -1,0 +1,112 @@
+{
+  "script": "02-full-test",
+  "timestamp": "2026-03-21T18:23:21.266Z",
+  "platform": "cloudflare-ai-gateway",
+  "tests": [
+    {
+      "name": "mgmt: list gateways",
+      "status": "PASS",
+      "latency_ms": 560,
+      "notes": "",
+      "response_preview": "{\"count\":1,\"gateways\":[\"openclaw-autopsy\"]}"
+    },
+    {
+      "name": "mgmt: get gateway details",
+      "status": "PASS",
+      "latency_ms": 334,
+      "notes": "",
+      "response_preview": "{\"id\":\"openclaw-autopsy\",\"cache_ttl\":300,\"rate_limit\":100}"
+    },
+    {
+      "name": "mgmt: update gateway",
+      "status": "PASS",
+      "latency_ms": 1247,
+      "notes": "",
+      "response_preview": "{\"success\":true,\"new_limit\":200}"
+    },
+    {
+      "name": "proxy: OpenAI chat",
+      "status": "PASS",
+      "latency_ms": 877,
+      "notes": "",
+      "response_preview": "{\"model\":\"gpt-4o-mini-2024-07-18\",\"content\":\"Hi!\",\"step\":\"0\"}"
+    },
+    {
+      "name": "proxy: OpenAI streaming",
+      "status": "PASS",
+      "latency_ms": 706,
+      "notes": "",
+      "response_preview": "{\"chunks\":11,\"streaming\":true}"
+    },
+    {
+      "name": "proxy: Anthropic messages",
+      "status": "PASS",
+      "latency_ms": 2916,
+      "notes": "",
+      "response_preview": "{\"model\":\"claude-haiku-4-5-20251001\",\"content\":\"Hi! 👋 How can I help\",\"stop\":\"max_tokens\"}"
+    },
+    {
+      "name": "proxy: Groq chat",
+      "status": "PASS",
+      "latency_ms": 474,
+      "notes": "",
+      "response_preview": "{\"model\":\"llama-3.1-8b-instant\",\"content\":\"Hello, how are you today?\"}"
+    },
+    {
+      "name": "proxy: DeepSeek chat",
+      "status": "PASS",
+      "latency_ms": 2180,
+      "notes": "",
+      "response_preview": "{\"model\":\"deepseek-chat\",\"content\":\"Hello! 👋 How are you doing today?\"}"
+    },
+    {
+      "name": "unified: openai/gpt-4o-mini",
+      "status": "PASS",
+      "latency_ms": 888,
+      "notes": "",
+      "response_preview": "{\"model\":\"gpt-4o-mini-2024-07-18\",\"content\":\"Hello! How can I\"}"
+    },
+    {
+      "name": "cache: first request (miss)",
+      "status": "PASS",
+      "latency_ms": 558,
+      "notes": "",
+      "response_preview": "{\"content\":\"Cached!\",\"cache\":\"DYNAMIC\"}"
+    },
+    {
+      "name": "cache: second identical request (hit?)",
+      "status": "PASS",
+      "latency_ms": 667,
+      "notes": "",
+      "response_preview": "{\"content\":\"Cached.\",\"cache\":\"DYNAMIC\"}"
+    },
+    {
+      "name": "custom metadata header",
+      "status": "PASS",
+      "latency_ms": 658,
+      "notes": "",
+      "response_preview": "{\"content\":\"Hello! How can I\",\"step\":\"0\"}"
+    },
+    {
+      "name": "tool calling via proxy",
+      "status": "PASS",
+      "latency_ms": 899,
+      "notes": "",
+      "response_preview": "{\"tool_calls\":1,\"name\":\"get_weather\"}"
+    },
+    {
+      "name": "JSON mode via proxy",
+      "status": "PASS",
+      "latency_ms": 921,
+      "notes": "",
+      "response_preview": "{\"content\":\"{\\n  \\\"color\\\": \\\"blue\\\"\\n}\"}"
+    },
+    {
+      "name": "mgmt: delete gateway",
+      "status": "PASS",
+      "latency_ms": 1462,
+      "notes": "",
+      "response_preview": "{\"success\":true}"
+    }
+  ]
+}

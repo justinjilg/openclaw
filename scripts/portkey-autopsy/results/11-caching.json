@@ -1,0 +1,28 @@
+{
+  "script": "11-caching",
+  "timestamp": "2026-03-21T14:52:25.559Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "cache — first request (miss expected)",
+      "status": "PASS",
+      "latency_ms": 579,
+      "notes": "",
+      "response_preview": "{\"content\":\"cached\"}"
+    },
+    {
+      "name": "cache — second identical request (hit expected)",
+      "status": "PASS",
+      "latency_ms": 433,
+      "notes": "",
+      "response_preview": "{\"content\":\"cached\"}"
+    },
+    {
+      "name": "cache — force refresh",
+      "status": "PASS",
+      "latency_ms": 1860,
+      "notes": "",
+      "response_preview": "{\"content\":\"cached\"}"
+    }
+  ]
+}

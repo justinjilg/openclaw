@@ -1,0 +1,35 @@
+{
+  "script": "18-evals",
+  "timestamp": "2026-03-21T17:41:57.739Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "evals.create",
+      "status": "FAIL",
+      "latency_ms": 2289,
+      "notes": "400 status code (no body)",
+      "response_preview": null
+    },
+    {
+      "name": "evals.list",
+      "status": "FAIL",
+      "latency_ms": 146,
+      "notes": "400 status code (no body)",
+      "response_preview": null
+    },
+    {
+      "name": "evals.retrieve",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No eval",
+      "response_preview": null
+    },
+    {
+      "name": "evals.delete",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No eval",
+      "response_preview": null
+    }
+  ]
+}

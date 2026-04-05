@@ -1,0 +1,42 @@
+HTTP/2 200 
+date: Tue, 17 Mar 2026 13:20:31 GMT
+content-type: application/json
+set-cookie: AWSALB=jZps9vaIQviDI/nTDqGKuQ+e68BGiuIh1qq71UfQG7A9E1ds3lJqZPGZcv8q8xH8hxWjinqeW3S5o4HA8nSF0iAEAZ+nDmQ4wy7wGu6YyhyZvuvWnSHQjZKLOUNC; Expires=Tue, 24 Mar 2026 13:20:28 GMT; Path=/
+set-cookie: AWSALBCORS=jZps9vaIQviDI/nTDqGKuQ+e68BGiuIh1qq71UfQG7A9E1ds3lJqZPGZcv8q8xH8hxWjinqeW3S5o4HA8nSF0iAEAZ+nDmQ4wy7wGu6YyhyZvuvWnSHQjZKLOUNC; Expires=Tue, 24 Mar 2026 13:20:28 GMT; Path=/; SameSite=None; Secure
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+access-control-allow-origin: *
+access-control-expose-headers: *
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+link: <https://api.brainstormrouter.com/openapi.json>; rel="service-desc", <https://brainstormrouter.com/llms.txt>; rel="describedby", <https://brainstormrouter.com/llms-agent-playbook.txt>; rel="getting-started", </v1/mcp/connect>; rel="mcp-server", </v1/self>; rel="self-awareness", <https://brainstormrouter.com/.well-known/agents.json>; rel="agent-discovery"
+permissions-policy: geolocation=(), camera=(), microphone=()
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-br-actual-cost: 0.000003
+x-br-cache: miss
+x-br-deprecation: null-scope-keys-default-to-developer
+x-br-estimated-cost: 0.0000
+x-br-estimated-cost-cents: 0
+x-br-guardian-overhead-ms: 0.1
+x-br-guardian-status: on
+x-br-guardrail-status: pass
+x-br-model-contract: strict
+x-br-provider-latency-ms: 338
+x-br-route-confidence: 0.4000
+x-br-route-reason: thompson-sampling
+x-br-routed-model: deepseek/deepseek-chat
+x-br-routing-overhead-ms: 1947.0
+x-br-total-latency-ms: 1860
+x-budget-limit: 14.5
+x-budget-remaining: 14.500000
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 115
+x-ratelimit-reset: 60
+x-request-id: dd109558-9e81-4195-b5e6-a994031bacae
+cf-cache-status: DYNAMIC
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=sDWNewe0szBEeIvPA6IxbsoEI4trAO6m7eeEIgnoZVmpYDlwH60VDfz%2F2Qll8dmNXbRuEs3jsdSmVgRKLh93T3QSgzfcNRAJyJtbIu%2BftUsAqhB1%2BaY%3D"}]}
+server: cloudflare
+cf-ray: 9ddc4b930ff20d94-MIA
+alt-svc: h3=":443"; ma=86400
+

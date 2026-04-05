@@ -1,0 +1,42 @@
+{
+  "script": "12-virtual-keys",
+  "timestamp": "2026-03-21T17:44:21.972Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "virtualKeys.list",
+      "status": "PASS",
+      "latency_ms": 401,
+      "notes": "",
+      "response_preview": "{\"count\":2,\"keys\":[\"object\",\"total\",\"data\",\"getHeaders\"]}"
+    },
+    {
+      "name": "virtualKeys.create",
+      "status": "PASS",
+      "latency_ms": 181,
+      "notes": "",
+      "response_preview": "{\"slug\":\"autopsy-test-vk-2d9ec9\",\"keys\":[\"id\",\"slug\",\"object\",\"getHeaders\"]}"
+    },
+    {
+      "name": "virtualKeys.retrieve",
+      "status": "PASS",
+      "latency_ms": 174,
+      "notes": "",
+      "response_preview": "{\"slug\":\"autopsy-test-vk-2d9ec9\",\"name\":\"autopsy-test-vk-1774115060923\"}"
+    },
+    {
+      "name": "virtualKeys.update",
+      "status": "PASS",
+      "latency_ms": 344,
+      "notes": "",
+      "response_preview": "{\"slug\":\"autopsy-test-vk-2d9ec9\"}"
+    },
+    {
+      "name": "virtualKeys.delete",
+      "status": "PASS",
+      "latency_ms": 349,
+      "notes": "",
+      "response_preview": "deleted"
+    }
+  ]
+}

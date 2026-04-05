@@ -1,0 +1,49 @@
+{
+  "script": "14-prompts",
+  "timestamp": "2026-03-21T17:44:41.878Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "prompts.list",
+      "status": "PASS",
+      "latency_ms": 369,
+      "notes": "",
+      "response_preview": "{\"count\":0,\"keys\":[\"object\",\"total\",\"data\",\"getHeaders\"]}"
+    },
+    {
+      "name": "prompts.create",
+      "status": "FAIL",
+      "latency_ms": 343,
+      "notes": "{\"success\":false,\"data\":{\"message\":\"Validation failed: undefined: Invalid value, undefined: Invalid value(s), undefined: Invalid value, undefined: Invalid value\",\"errorCode\":\"AB01\",\"request_id\":\"ee52f077-933c-4e21-b90e-0a3f4b089b23\",\"error_details\":[{\"msg\":\"Invalid value\",\"param\":\"collection_id\",\"lo",
+      "response_preview": null
+    },
+    {
+      "name": "prompts.retrieve",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No prompt to retrieve",
+      "response_preview": null
+    },
+    {
+      "name": "prompts.render (variable interpolation)",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No prompt to render",
+      "response_preview": null
+    },
+    {
+      "name": "prompts.update",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No prompt to update",
+      "response_preview": null
+    },
+    {
+      "name": "prompts.delete",
+      "status": "FAIL",
+      "latency_ms": 0,
+      "notes": "No prompt to delete",
+      "response_preview": null
+    }
+  ]
+}

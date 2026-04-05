@@ -1,0 +1,21 @@
+{
+  "script": "03-agent-profiles",
+  "timestamp": "2026-03-21T17:54:00.091Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "GET /v1/agent/profiles (admin)",
+      "status": "PASS",
+      "latency_ms": 505,
+      "notes": "",
+      "response_preview": "{}"
+    },
+    {
+      "name": "GET /v1/agent/profiles (scoped key — should fail)",
+      "status": "PASS",
+      "latency_ms": 279,
+      "notes": "",
+      "response_preview": "correctly_blocked"
+    }
+  ]
+}

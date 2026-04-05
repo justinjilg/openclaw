@@ -1,0 +1,21 @@
+{
+  "script": "05-images",
+  "timestamp": "2026-03-21T14:47:09.226Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "images.generate (dall-e-3)",
+      "status": "PASS",
+      "latency_ms": 12048,
+      "notes": "",
+      "response_preview": "{\"url_length\":472,\"revised_prompt\":\"Imagine a very simple and crisp visual scene. Focus on a pure white canvas that is starkly contraste\"}"
+    },
+    {
+      "name": "images.generate (dall-e-2, smaller)",
+      "status": "PASS",
+      "latency_ms": 7831,
+      "notes": "",
+      "response_preview": "{\"url_present\":true}"
+    }
+  ]
+}

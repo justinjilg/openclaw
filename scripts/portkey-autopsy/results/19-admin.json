@@ -1,0 +1,28 @@
+{
+  "script": "19-admin",
+  "timestamp": "2026-03-21T17:42:05.972Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "admin.users.list",
+      "status": "FAIL",
+      "latency_ms": 340,
+      "notes": "{\"success\":false,\"data\":{\"message\":\"You do not have enough permissions to execute this request\",\"errorCode\":\"AB03\",\"request_id\":\"cc856626-ad56-4f91-8e57-5b4d09fbf8b6\"}}",
+      "response_preview": null
+    },
+    {
+      "name": "admin.workspaces.list",
+      "status": "PASS",
+      "latency_ms": 153,
+      "notes": "",
+      "response_preview": "{\"count\":1}"
+    },
+    {
+      "name": "admin.users.invites.list",
+      "status": "FAIL",
+      "latency_ms": 161,
+      "notes": "{\"success\":false,\"data\":{\"message\":\"You do not have enough permissions to execute this request\",\"errorCode\":\"AB03\",\"request_id\":\"53d455d2-3162-46de-8c60-ab60b14dc1e7\"}}",
+      "response_preview": null
+    }
+  ]
+}

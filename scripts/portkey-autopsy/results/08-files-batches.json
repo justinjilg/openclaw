@@ -1,0 +1,42 @@
+{
+  "script": "08-files-batches",
+  "timestamp": "2026-03-21T14:47:49.804Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "files.create (upload JSONL)",
+      "status": "PASS",
+      "latency_ms": 837,
+      "notes": "",
+      "response_preview": "{\"id\":\"file-2RmzSi69yq2d4PG3ZiANQk\",\"filename\":\"test-batch.jsonl\",\"purpose\":\"batch\",\"status\":\"processed\"}"
+    },
+    {
+      "name": "files.list",
+      "status": "PASS",
+      "latency_ms": 696,
+      "notes": "",
+      "response_preview": "{\"count\":1}"
+    },
+    {
+      "name": "files.retrieve",
+      "status": "PASS",
+      "latency_ms": 644,
+      "notes": "",
+      "response_preview": "{\"id\":\"file-2RmzSi69yq2d4PG3ZiANQk\",\"bytes\":157,\"status\":\"processed\"}"
+    },
+    {
+      "name": "batches.create",
+      "status": "PASS",
+      "latency_ms": 949,
+      "notes": "",
+      "response_preview": "{\"id\":\"batch_69beaf94a9cc819082b1b2c8bf1d6e50\",\"status\":\"validating\",\"endpoint\":\"/v1/chat/completions\"}"
+    },
+    {
+      "name": "batches.list",
+      "status": "PASS",
+      "latency_ms": 455,
+      "notes": "",
+      "response_preview": "{\"count\":20}"
+    }
+  ]
+}

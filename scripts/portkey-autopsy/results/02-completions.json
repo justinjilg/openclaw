@@ -1,0 +1,28 @@
+{
+  "script": "02-completions",
+  "timestamp": "2026-03-21T14:46:12.090Z",
+  "sdk_version": "3.0.3",
+  "tests": [
+    {
+      "name": "completions.create (non-streaming)",
+      "status": "PASS",
+      "latency_ms": 1780,
+      "notes": "",
+      "response_preview": " Paris.\")\n"
+    },
+    {
+      "name": "completions.create (streaming)",
+      "status": "PASS",
+      "latency_ms": 628,
+      "notes": "",
+      "response_preview": " 4, 10, 20, 30, 40,"
+    },
+    {
+      "name": "completions.create — usage tokens",
+      "status": "PASS",
+      "latency_ms": 984,
+      "notes": "",
+      "response_preview": "{\"prompt_tokens\":1,\"completion_tokens\":5,\"total_tokens\":6}"
+    }
+  ]
+}

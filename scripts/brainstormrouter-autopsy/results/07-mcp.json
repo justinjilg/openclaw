@@ -1,0 +1,21 @@
+{
+  "script": "07-mcp",
+  "timestamp": "2026-03-21T17:54:25.783Z",
+  "platform": "brainstormrouter",
+  "tests": [
+    {
+      "name": "MCP /v1/mcp/connect — probe availability",
+      "status": "PASS",
+      "latency_ms": 440,
+      "notes": "",
+      "response_preview": "{\"status\":406,\"content_type\":\"application/json\",\"body_preview\":\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"code\\\":-32000,\\\"message\\\":\\\"Not Acceptable: Client must accept both application/json and text/event-st"
+    },
+    {
+      "name": "MCP — list tools via JSON-RPC",
+      "status": "PASS",
+      "latency_ms": 264,
+      "notes": "",
+      "response_preview": "{\"status\":406,\"body_preview\":\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"code\\\":-32000,\\\"message\\\":\\\"Not Acceptable: Client must accept both application/json and text/event-stream\\\"},\\\"id\\\":null}\"}"
+    }
+  ]
+}

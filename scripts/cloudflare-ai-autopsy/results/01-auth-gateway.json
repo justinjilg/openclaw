@@ -1,0 +1,63 @@
+{
+  "script": "01-auth-gateway",
+  "timestamp": "2026-03-21T18:19:56.617Z",
+  "platform": "cloudflare-ai-gateway",
+  "tests": [
+    {
+      "name": "scoped token verify",
+      "status": "PASS",
+      "latency_ms": 338,
+      "notes": "",
+      "response_preview": "{\"status\":\"active\"}"
+    },
+    {
+      "name": "list gateways (scoped token)",
+      "status": "TIER_RESTRICTED",
+      "latency_ms": 473,
+      "notes": "10000: Authentication error",
+      "response_preview": null
+    },
+    {
+      "name": "list gateways (global key as Bearer)",
+      "status": "FAIL",
+      "latency_ms": 180,
+      "notes": "10001: Unable to authenticate request",
+      "response_preview": null
+    },
+    {
+      "name": "create gateway 'openclaw-autopsy'",
+      "status": "TIER_RESTRICTED",
+      "latency_ms": 311,
+      "notes": "10000: Authentication error",
+      "response_preview": null
+    },
+    {
+      "name": "proxy: default gateway → OpenAI",
+      "status": "FAIL",
+      "latency_ms": 446,
+      "notes": "[{\"code\":2001,\"message\":\"Please configure AI Gateway in the Cloudflare dashboard\"}]",
+      "response_preview": null
+    },
+    {
+      "name": "proxy: openclaw-autopsy gateway → OpenAI",
+      "status": "FAIL",
+      "latency_ms": 430,
+      "notes": "[{\"code\":2001,\"message\":\"Please configure AI Gateway in the Cloudflare dashboard\"}]",
+      "response_preview": null
+    },
+    {
+      "name": "unified endpoint (compat)",
+      "status": "FAIL",
+      "latency_ms": 160,
+      "notes": "[{\"code\":2001,\"message\":\"Please configure AI Gateway in the Cloudflare dashboard\"}]",
+      "response_preview": null
+    },
+    {
+      "name": "custom metadata header",
+      "status": "FAIL",
+      "latency_ms": 169,
+      "notes": "[{\"code\":2001,\"message\":\"Please configure AI Gateway in the Cloudflare dashboard\"}]",
+      "response_preview": null
+    }
+  ]
+}
