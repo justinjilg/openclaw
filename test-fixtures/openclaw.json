@@ -1,0 +1,230 @@
+{
+  "agents": {
+    "defaults": {
+      "model": "brainstormrouter/auto",
+      "memorySearch": {
+        "enabled": false
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "name": "Coordinator",
+        "workspace": "/home/node/workspace/workspaces/main",
+        "model": "moonshot/kimi-k2.5",
+        "heartbeat": {
+          "activeHours": {
+            "start": "08:00",
+            "end": "23:00"
+          }
+        },
+        "tools": {
+          "profile": "coding",
+          "allow": [
+            "bash",
+            "process",
+            "read",
+            "write",
+            "edit",
+            "sessions_list",
+            "sessions_history",
+            "sessions_send",
+            "sessions_spawn",
+            "mcp__brainstormrouter__br_get_health",
+            "mcp__brainstormrouter__br_list_agents",
+            "mcp__brainstormrouter__br_list_models",
+            "mcp__brainstormrouter__br_get_usage",
+            "mcp__brainstormrouter__br_memory_store",
+            "mcp__brainstormrouter__br_memory_query",
+            "mcp__brainstormrouter__br_memory_list",
+            "mcp__brainstormrouter__br_workspace_get",
+            "mcp__brainstormrouter__br_workspace_list",
+            "mcp__brainstormrouter__br_get_heartbeat",
+            "mcp__brainstormrouter__br_get_agent_skill",
+            "mcp__brainstormrouter__br_list_agent_skills"
+          ],
+          "deny": [
+            "browser",
+            "canvas",
+            "nodes",
+            "cron",
+            "gateway"
+          ],
+          "fs": {
+            "workspaceOnly": true
+          }
+        }
+      },
+      {
+        "id": "ops",
+        "name": "Operations Monitor",
+        "workspace": "/home/node/workspace/workspaces/ops",
+        "model": "deepseek/deepseek-chat",
+        "heartbeat": {
+          "activeHours": {
+            "start": "06:00",
+            "end": "00:00"
+          }
+        },
+        "tools": {
+          "profile": "minimal",
+          "allow": [
+            "read",
+            "write",
+            "sessions_send",
+            "sessions_list",
+            "mcp__brainstormrouter__br_get_health",
+            "mcp__brainstormrouter__br_get_usage",
+            "mcp__brainstormrouter__br_get_ops_status",
+            "mcp__brainstormrouter__br_agent_limits",
+            "mcp__brainstormrouter__br_agent_anomaly",
+            "mcp__brainstormrouter__br_get_insights",
+            "mcp__brainstormrouter__br_list_agents",
+            "mcp__brainstormrouter__br_get_leaderboard",
+            "mcp__brainstormrouter__br_get_behavioral_profiles",
+            "mcp__brainstormrouter__br_get_cost_forecast",
+            "mcp__brainstormrouter__br_get_heartbeat",
+            "mcp__brainstormrouter__br_workspace_list",
+            "mcp__brainstormrouter__br_get_agent_skill",
+            "mcp__brainstormrouter__br_get_skill_history",
+            "mcp__brainstormrouter__br_list_agent_skills"
+          ],
+          "deny": [
+            "bash",
+            "process",
+            "edit",
+            "browser",
+            "canvas",
+            "nodes",
+            "cron",
+            "gateway",
+            "sessions_spawn"
+          ],
+          "fs": {
+            "workspaceOnly": true
+          }
+        }
+      },
+      {
+        "id": "research",
+        "name": "Researcher",
+        "workspace": "/home/node/workspace/workspaces/research",
+        "model": "google/gemini-2.5-flash",
+        "tools": {
+          "profile": "minimal",
+          "allow": [
+            "read",
+            "write",
+            "web_search",
+            "web_fetch",
+            "sessions_send",
+            "mcp__brainstormrouter__br_memory_store",
+            "mcp__brainstormrouter__br_memory_query",
+            "mcp__brainstormrouter__br_memory_list",
+            "mcp__brainstormrouter__br_workspace_get",
+            "mcp__brainstormrouter__br_workspace_list",
+            "mcp__brainstormrouter__br_get_agent_skill",
+            "mcp__brainstormrouter__br_list_agent_skills"
+          ],
+          "deny": [
+            "bash",
+            "process",
+            "edit",
+            "browser",
+            "canvas",
+            "nodes",
+            "cron",
+            "gateway",
+            "sessions_spawn"
+          ],
+          "fs": {
+            "workspaceOnly": true
+          }
+        }
+      },
+      {
+        "id": "dev",
+        "name": "Developer",
+        "workspace": "/home/node/workspace/workspaces/dev",
+        "model": "anthropic/claude-sonnet-4-20250514",
+        "sandbox": {
+          "mode": "all"
+        },
+        "tools": {
+          "profile": "coding",
+          "allow": [
+            "bash",
+            "process",
+            "read",
+            "write",
+            "edit",
+            "sessions_send",
+            "mcp__brainstormrouter__br_workspace_get",
+            "mcp__brainstormrouter__br_workspace_list"
+          ],
+          "deny": [
+            "browser",
+            "canvas",
+            "nodes",
+            "cron",
+            "gateway",
+            "sessions_spawn"
+          ],
+          "fs": {
+            "workspaceOnly": true
+          }
+        }
+      },
+      {
+        "id": "admin",
+        "name": "Platform Admin",
+        "workspace": "/home/node/workspace/workspaces/admin",
+        "model": "deepseek/deepseek-chat",
+        "tools": {
+          "profile": "minimal",
+          "allow": [
+            "read",
+            "sessions_send",
+            "mcp__brainstormrouter__br_get_governance",
+            "mcp__brainstormrouter__br_list_agents",
+            "mcp__brainstormrouter__br_agent_status",
+            "mcp__brainstormrouter__br_bootstrap_agent",
+            "mcp__brainstormrouter__br_get_memory_compliance",
+            "mcp__brainstormrouter__br_get_agent_manifests",
+            "mcp__brainstormrouter__br_workspace_put",
+            "mcp__brainstormrouter__br_workspace_delete",
+            "mcp__brainstormrouter__br_update_agent_skill",
+            "mcp__brainstormrouter__br_get_heartbeat",
+            "mcp__brainstormrouter__br_list_agent_skills"
+          ],
+          "deny": [
+            "bash",
+            "process",
+            "write",
+            "edit",
+            "browser",
+            "canvas",
+            "nodes",
+            "cron",
+            "gateway",
+            "sessions_spawn"
+          ],
+          "fs": {
+            "workspaceOnly": true
+          }
+        }
+      }
+    ]
+  },
+  "tools": {
+    "profile": "coding",
+    "exec": {
+      "applyPatch": {
+        "workspaceOnly": true
+      }
+    },
+    "fs": {
+      "workspaceOnly": true
+    }
+  }
+}

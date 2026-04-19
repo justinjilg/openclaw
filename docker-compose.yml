@@ -18,7 +18,7 @@
 
 services:
   openclaw-gateway:
-    image: ghcr.io/openclaw/openclaw:2026.3.28
+    image: ghcr.io/openclaw/openclaw:2026.4.5
     container_name: openclaw-gateway
     restart: unless-stopped
     command: ["openclaw", "gateway", "--verbose"]
@@ -33,7 +33,7 @@ services:
       - ${OPENCLAW_CONFIG_DIR}:/home/node/.openclaw
       - ${OPENCLAW_WORKSPACE:-./workspace}:/home/node/workspace
       # Cross-project read-only access (Phase 3: agent workforce)
-      - ${PROJECTS_DIR:-~/Projects}:/home/node/projects
+      - ${PROJECTS_DIR:-~/Projects}:/home/node/projects:ro
 
     environment:
       - HOME=/home/node
@@ -44,6 +44,8 @@ services:
       - BRAINSTORMROUTER_API_KEY=${BRAINSTORMROUTER_API_KEY}
       - BRAINSTORMROUTER_ADMIN_KEY=${BRAINSTORMROUTER_ADMIN_KEY}
       - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      # GitHub access for filing issues, reading repos
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
       # WhatsApp bridge needs more heap than Node.js default
       - NODE_OPTIONS=--max-old-space-size=1792
       # Disable insecure private WebSocket
@@ -54,6 +56,12 @@ services:
     # Run as non-root (node user = UID 1000)
     user: "1000:1000"
 
+    # Read-only root filesystem (writable paths via tmpfs)
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+      - /home/node/.cache:size=64m,mode=0700
+
     # Drop all capabilities
     cap_drop:
       - ALL
@@ -61,7 +69,7 @@ services:
     # Prevent privilege escalation + custom seccomp syscall filter
     security_opt:
       - no-new-privileges:true
-      # - seccomp:openclaw-seccomp.json  # TODO: needs syscall audit for v2026.3.12 (sched_*, clone3, etc.)
+      - seccomp:openclaw-seccomp.json
 
     # Prevent fork bombs
     ulimits:
@@ -84,8 +92,8 @@ services:
       test: ["CMD", "curl", "-4sf", "http://127.0.0.1:18789/health"]
       interval: 30s
       timeout: 5s
-      retries: 3
-      start_period: 120s
+      retries: 5
+      start_period: 240s
 
     logging:
       driver: json-file
@@ -95,6 +103,7 @@ services:
 
   # --- Community Dashboard (tugcantopaloglu/openclaw-dashboard) ---
   openclaw-dashboard:
+    # TODO: Pin by digest. Run `./scripts/pin-images.sh` when Docker is available.
     image: ghcr.io/tugcantopaloglu/openclaw-dashboard:latest
     container_name: openclaw-dashboard
     restart: unless-stopped
@@ -114,6 +123,7 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+      - seccomp:openclaw-seccomp.json
     deploy:
       resources:
         limits:
@@ -127,7 +137,8 @@ services:
 
   # --- Custom BR-Integrated Dashboard ---
   br-dashboard:
-    image: nginxinc/nginx-unprivileged:alpine
+    # Pinned by digest (nginxinc/nginx-unprivileged:alpine as of 2026-04-10)
+    image: nginxinc/nginx-unprivileged@sha256:601c823234c474696ded03d619e67f1e59538802731543099c691aea67e4a553
     container_name: br-dashboard
     restart: unless-stopped
     profiles: ["dashboard"]
@@ -142,6 +153,7 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+      - seccomp:openclaw-seccomp.json
     deploy:
       resources:
         limits:
@@ -154,13 +166,13 @@ services:
         max-file: "3"
 
   openclaw-cli:
-    image: ghcr.io/openclaw/openclaw:2026.3.28
+    image: ghcr.io/openclaw/openclaw:2026.4.5
     container_name: openclaw-cli
     profiles: ["cli"]
     volumes:
       - ${OPENCLAW_CONFIG_DIR}:/home/node/.openclaw
       - ${OPENCLAW_WORKSPACE:-./workspace}:/home/node/workspace
-      - ${PROJECTS_DIR:-~/Projects}:/home/node/projects
+      - ${PROJECTS_DIR:-~/Projects}:/home/node/projects:ro
     environment:
       - HOME=/home/node
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
@@ -172,3 +184,4 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+      - seccomp:openclaw-seccomp.json

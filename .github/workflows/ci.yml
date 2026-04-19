@@ -1,0 +1,99 @@
+name: OpenClaw CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke-test:
+    name: Smoke Test + Doc Validator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python (for YAML/JSON validation)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Run smoke test
+        run: ./scripts/smoke-test.sh
+
+      - name: Run doc validator
+        run: ./scripts/validate-docs.sh
+        env:
+          OPENCLAW_CONFIG_DIR: ./test-fixtures
+
+  config-validation:
+    name: Config Syntax Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate docker-compose.yml
+        run: python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml'))"
+
+      - name: Validate openclaw-seccomp.json
+        run: python3 -c "import json; json.load(open('openclaw-seccomp.json'))"
+
+      - name: Validate gateway.yaml
+        run: python3 -c "import yaml; yaml.safe_load(open('gateway.yaml'))"
+
+      - name: Check no hardcoded secrets
+        run: |
+          if grep -rnE '(sk-[a-zA-Z0-9]{20,}|AKIA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{20,})' \
+            --include='*.sh' --include='*.yml' --include='*.yaml' --include='*.json' \
+            --exclude-dir=node_modules --exclude-dir=.git --exclude='.env*' \
+            . 2>/dev/null; then
+            echo "::error::Possible hardcoded secrets found"
+            exit 1
+          fi
+
+      - name: Check no :latest in docker-compose (except TODOs)
+        run: |
+          if grep -nE '^\s*image:.*:latest' docker-compose.yml | grep -v 'TODO'; then
+            echo "::error::Unpinned :latest image without TODO marker"
+            exit 1
+          fi
+
+  security-lint:
+    name: Security Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check .env is gitignored
+        run: grep -qxF '.env' .gitignore || grep -qE '^\.env$' .gitignore
+
+      - name: Check all shell scripts use strict mode
+        run: |
+          FAIL=0
+          for f in start.sh scripts/*.sh; do
+            if [ ! -f "$f" ]; then continue; fi
+            if ! head -15 "$f" | grep -q 'set -euo pipefail'; then
+              echo "::warning::$f does not use set -euo pipefail"
+              FAIL=1
+            fi
+          done
+          exit $FAIL
+
+      - name: Verify CLI Projects mount is read-only
+        run: grep -q 'PROJECTS_DIR.*:/home/node/projects:ro' docker-compose.yml
+
+      - name: Verify gateway has seccomp
+        run: grep -q 'seccomp:openclaw-seccomp.json' docker-compose.yml
+
+      - name: Verify gateway has read_only rootfs
+        run: |
+          awk '/^  openclaw-gateway:/{flag=1;next} /^  [a-z]/{flag=0} flag' docker-compose.yml | grep -q 'read_only: true'
+
+      - name: Verify cap_drop ALL on all services
+        run: |
+          COUNT=$(grep -c 'cap_drop:' docker-compose.yml)
+          echo "cap_drop found $COUNT times across services"
+          [ "$COUNT" -ge 4 ] || { echo "::error::cap_drop ALL not on all services"; exit 1; }

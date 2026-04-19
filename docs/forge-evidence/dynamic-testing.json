@@ -1,0 +1,168 @@
+{
+  "stream": "B",
+  "type": "dynamic-testing",
+  "timestamp": "2026-04-09T12:00:00Z",
+  "tests": {
+    "smoke_test": {
+      "script": "./scripts/smoke-test.sh",
+      "result": "PASS",
+      "counts": {
+        "pass": 25,
+        "warn": 1,
+        "fail": 0
+      },
+      "warnings": [
+        "dashboard image uses :latest tag (openclaw-dashboard:latest) — should be pinned"
+      ],
+      "sections": {
+        "config_validation": {"pass": 3, "fail": 0},
+        "required_files": {"pass": 6, "fail": 0},
+        "agent_souls": {"pass": 5, "fail": 0},
+        "skills": {"pass": 3, "fail": 0},
+        "security_static": {"pass": 5, "warn": 1, "fail": 0},
+        "script_hygiene": {"pass": 3, "fail": 0}
+      }
+    },
+    "integration_test": {
+      "script": "./scripts/integration-test.sh",
+      "result": "PASS",
+      "counts": {
+        "pass": 5,
+        "fail": 0
+      },
+      "sections": {
+        "gateway_health": {
+          "docker_healthcheck": "healthy",
+          "http_health": {"ok": true, "status": "live"}
+        },
+        "container_state": "Up",
+        "doctor": "completed",
+        "version": "OpenClaw 2026.4.5"
+      }
+    },
+    "doc_validator": {
+      "script": "./scripts/validate-docs.sh",
+      "result": "DOCS IN SYNC",
+      "counts": {
+        "pass": 9,
+        "drift": 0
+      },
+      "mcp_tool_counts": {
+        "main": 12,
+        "ops": 15,
+        "research": 7,
+        "dev": 2,
+        "admin": 11
+      },
+      "image_version_match": true,
+      "security_layer_enforcement": {
+        "layer4_workspace_only": true,
+        "layer5_seccomp": true,
+        "approval_mode_always": true
+      }
+    }
+  },
+  "gateway_health": {
+    "endpoint": "http://127.0.0.1:18789/health",
+    "response": {"ok": true, "status": "live"},
+    "method": "docker compose exec curl"
+  },
+  "container_security": {
+    "read_only_rootfs": true,
+    "security_opt": [
+      "no-new-privileges:true",
+      "seccomp=<custom-profile>"
+    ],
+    "seccomp_profile": {
+      "defaultAction": "SCMP_ACT_ERRNO",
+      "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_AARCH64"],
+      "syscall_groups": 14,
+      "syscall_categories": [
+        "container_init",
+        "process_lifecycle",
+        "thread_identity",
+        "memory_management",
+        "file_operations",
+        "file_watching",
+        "networking",
+        "epoll_poll",
+        "io_uring",
+        "timers_clocks",
+        "scheduling",
+        "futex",
+        "misc_system_info",
+        "container_runtime"
+      ]
+    },
+    "cap_drop": ["ALL"]
+  },
+  "doctor": {
+    "agents": ["main", "ops", "research", "dev", "admin"],
+    "agent_count": 5,
+    "skills_eligible": 5,
+    "skills_missing_requirements": 45,
+    "plugins_loaded": 54,
+    "plugins_imported": 54,
+    "plugins_disabled": 40,
+    "plugins_errors": 0,
+    "channels": {
+      "discord": {"status": "ok", "identity": "@Jazz", "latency_ms": 243},
+      "whatsapp": {"status": "linked", "auth_age": "1m"}
+    },
+    "heartbeat_interval": "30m",
+    "session_store_entries": 15,
+    "advisories": [
+      "NODE_COMPILE_CACHE not set (performance suggestion for low-power hosts)",
+      "1/5 recent sessions missing transcripts",
+      "Memory search explicitly disabled"
+    ]
+  },
+  "security_audit": {
+    "command": "openclaw security audit --deep",
+    "counts": {
+      "critical": 0,
+      "warn": 2,
+      "info": 1
+    },
+    "warnings": [
+      {
+        "id": "gateway.trusted_proxies_missing",
+        "description": "Reverse proxy headers are not trusted. gateway.bind is loopback and gateway.trustedProxies is empty.",
+        "severity": "warn",
+        "mitigation": "Acceptable for loopback-only deployment — no reverse proxy in use"
+      },
+      {
+        "id": "models.weak_tier",
+        "description": "anthropic/claude-sonnet-4-20250514 (Below Claude 4.5) configured for dev agent",
+        "severity": "warn",
+        "mitigation": "Dev agent has approvalMode: always — human approves every action"
+      }
+    ],
+    "info": [
+      {
+        "id": "summary.attack_surface",
+        "details": {
+          "groups_open": 0,
+          "groups_allowlist": 2,
+          "tools_elevated": true,
+          "hooks_webhooks": false,
+          "hooks_internal": true,
+          "browser_control": true,
+          "trust_model": "personal assistant (one trusted operator)"
+        }
+      }
+    ]
+  },
+  "overall_assessment": {
+    "all_tests_pass": true,
+    "gateway_healthy": true,
+    "container_hardened": true,
+    "docs_in_sync": true,
+    "zero_critical_findings": true,
+    "open_warnings": [
+      "Dashboard image uses :latest tag (cosmetic — non-gateway service)",
+      "Trusted proxies not configured (acceptable for loopback binding)",
+      "Dev agent uses claude-sonnet-4 instead of claude-4.5+ (mitigated by approval mode)"
+    ]
+  }
+}
