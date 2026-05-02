@@ -17,7 +17,7 @@ SOUL.md                     # Root agent personality (legacy — see workspace S
 .env.example                # Template for secrets (start.sh handles this automatically)
 scripts/
   bootstrap-agents.sh       # One-shot: register all agents on BrainstormRouter
-  setup-dashboard.sh        # Configure community dashboard
+  setup-dashboard.sh        # Prep the BR-integrated dashboard
   smoke-test.sh             # Static validation (config syntax, file existence, security hygiene)
   integration-test.sh       # Runtime validation (requires running gateway)
   validate-docs.sh          # CLAUDE.md vs openclaw.json drift check
@@ -53,8 +53,8 @@ workspace/
 - DM policy is allowlist-based — unknown contacts are ignored
 - Skills auto-install from ClawHub is disabled; only workspace skills are loaded
 - **Cross-project access:** `~/Projects/` mounted **read-only** at `/home/node/projects/` on both gateway and CLI services. No agent can write to the host projects directory from within the container.
-- **Dashboards:** Community dashboard (port 3000, MFA-enabled) + custom BR dashboard (port 3001, static)
-- **Image pinned:** `ghcr.io/openclaw/openclaw:2026.4.5` — never use `:latest`
+- **Dashboard:** Custom BR-integrated dashboard (port 3001, static, digest-pinned nginx-unprivileged)
+- **Image pinned:** `ghcr.io/openclaw/openclaw:2026.4.29` — never use `:latest`
 - Secrets injected from 1Password at runtime (`op://Dev Keys/BrainstormRouter API Key/credential`, `op://Dev Keys/BrainstormRouter Admin Key/credential`, `op://Dev Keys/Moonshot API Key/credential`, `op://Dev Keys/OpenClaw Gateway/credential`)
 
 ## Multi-Agent Architecture
@@ -108,7 +108,7 @@ MCP server: `https://api.brainstormrouter.com/v1/mcp/connect` (streamable-http, 
 
 ```bash
 ./start.sh up                  # Inject secrets, start gateway, wait for /health → http://127.0.0.1:18789
-./start.sh up-dashboard        # Start gateway + both dashboards
+./start.sh up-dashboard        # Start gateway + BR dashboard
 ./start.sh down                # Stop all services, remove .env
 ./start.sh doctor              # Full audit (doctor + deep audit + skill audit + smoke test + doc validator)
 ./start.sh test                # Run smoke test only (fast, no gateway required)
@@ -157,13 +157,14 @@ Allowlist-only (`dm.policy: "allowlist"`). Empty by default — add contacts bef
 
 ### Layer 5: Docker Hardening
 - Non-root (UID 1000), all capabilities dropped
-- Custom seccomp profile (`openclaw-seccomp.json`) applied to gateway, CLI, and both dashboard services
+- Custom seccomp profile (`openclaw-seccomp.json`) applied to gateway, CLI, and BR-dashboard services. Profile audit caught a stealth gap during the 2026.4.29 update: `fchmod` (FD-based) was missing while path-based `chmod` was present, which silently broke pnpm's per-plugin runtime-dep staging via `fs.copyFile`. When tightening this profile further, also re-verify the FD-based variant of every fs syscall (`fchmod`, `fchown`, `fchmodat`, `fchownat`).
 - `no-new-privileges`, ulimits (nproc 256), PID limit (256)
 - Memory cap (2GB gateway), CPU cap (2 cores gateway)
 - `read_only: true` rootfs on gateway, writable paths via tmpfs (`/tmp`, `/home/node/.cache`)
+- Plugin runtime-deps cache (`~/.openclaw/plugin-runtime-deps`) lives on a Linux-native named volume (`openclaw-plugin-runtime-deps`), not the macOS bind mount. Reason: 2026.4.29 introduced per-version, per-plugin pnpm staging that hits EPERM on `copyfile` when the destination is a Docker Desktop bind-mounted directory. The cache is regeneratable; sessions/memories/credentials stay in the bind-mounted `~/.openclaw/`. On a fresh volume, run `docker run --rm -v openclaw_openclaw-plugin-runtime-deps:/v --user 0:0 alpine chown -R 1000:1000 /v` to set ownership before first start. (`./start.sh up` does this idempotently — see `ensure_plugin_volume_owner` if you tweak the volume.)
 - Log rotation (10MB x 3 files)
 - Cross-project volume: `~/Projects` mounted at `/home/node/projects/` **read-only** on both gateway and CLI
-- Dashboard images (community + br-dashboard) also pinned and hardened (caps dropped, no-new-privileges, seccomp)
+- BR-dashboard image digest-pinned and hardened (caps dropped, no-new-privileges, seccomp)
 
 ### Layer 6: Tool Execution
 - Tool profiles (from openclaw.json): `main`=`coding`, `dev`=`coding`, `ops`/`research`/`admin`=`minimal`
@@ -210,11 +211,11 @@ Allowlist-only (`dm.policy: "allowlist"`). Empty by default — add contacts bef
 - **CVE-2026-25253** (CVSS 8.8) — Gateway RCE via unauthenticated WebSocket. Fixed in v2026.2.x. Keep image updated.
 - **CVE-2026-31147** (CVSS 7.5) — WebSocket origin bypass. Fixed in v2026.3.11. Requires v2026.3.11+.
 - **CVE-2026-30892** (CVSS 6.5) — Auth lockout / enumeration. Fixed in v2026.3.7. Requires v2026.3.7+.
-- **CVE-2026-28834** (CVSS 7.8) — Workspace escape via symlink traversal. Fixed in v2026.2.26. We are safe on v2026.4.5.
-- **CVE-2026-27691** (CVSS 5.4) — Slack DM allowlist bypass. Fixed in v2026.2.25. We are safe on v2026.4.5.
-- **GHSA-9p3r-hh9g-5cmg** (Critical) — Sandbox escape via TOCTOU race in remote FS bridge. Fixed in v2026.3.31+. We are safe on v2026.4.5.
-- **GHSA-3qpv-xf3v-mm45** (High) — Workspace `.env` overrides bundled hooks root. Fixed in v2026.3.31+. We are safe on v2026.4.5.
-- **GHSA-qcj9-wwgw-6gm8** (High) — Workspace `.env` overrides plugin trust root. Fixed in v2026.3.31+. We are safe on v2026.4.5.
+- **CVE-2026-28834** (CVSS 7.8) — Workspace escape via symlink traversal. Fixed in v2026.2.26. We are safe on v2026.4.29.
+- **CVE-2026-27691** (CVSS 5.4) — Slack DM allowlist bypass. Fixed in v2026.2.25. We are safe on v2026.4.29.
+- **GHSA-9p3r-hh9g-5cmg** (Critical) — Sandbox escape via TOCTOU race in remote FS bridge. Fixed in v2026.3.31+. We are safe on v2026.4.29.
+- **GHSA-3qpv-xf3v-mm45** (High) — Workspace `.env` overrides bundled hooks root. Fixed in v2026.3.31+. We are safe on v2026.4.29.
+- **GHSA-qcj9-wwgw-6gm8** (High) — Workspace `.env` overrides plugin trust root. Fixed in v2026.3.31+. We are safe on v2026.4.29.
 - **ClawJacked** — WebSocket hijack from malicious browser tabs. Mitigated by loopback binding.
 - **ClawHub supply chain** — 824+ malicious skills, 1,467 payloads found on ClawHub. Mitigated by `autoInstall: false`.
 

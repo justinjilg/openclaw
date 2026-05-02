@@ -107,11 +107,22 @@ EOF
 # It is chmod 600 and .gitignored. It is removed on explicit './start.sh down'.
 # Contains 6 secrets: gateway token, moonshot key, BR keys (2), discord token, github token.
 
+# Idempotently ensure the plugin-runtime-deps named volume is owned by UID 1000:1000.
+# Docker creates named volumes root-owned, but the gateway runs as 1000 — without
+# this, 2026.4.29's per-plugin pnpm staging fails with EACCES. Cheap to run on
+# every up; alpine pull is cached.
+ensure_plugin_volume_owner() {
+  local vol="${COMPOSE_PROJECT_NAME:-openclaw}_openclaw-plugin-runtime-deps"
+  docker volume inspect "$vol" >/dev/null 2>&1 || docker volume create "$vol" >/dev/null
+  docker run --rm -v "$vol":/v --user 0:0 alpine sh -c 'chown -R 1000:1000 /v && chmod 755 /v' >/dev/null 2>&1 || true
+}
+
 # --- Commands ---
 check_deps
 case "${1:-up}" in
   up)
     write_env
+    ensure_plugin_volume_owner
     docker compose up -d openclaw-gateway
     wait_for_health
     echo ""
@@ -120,11 +131,11 @@ case "${1:-up}" in
     ;;
   up-dashboard)
     write_env
+    ensure_plugin_volume_owner
     docker compose --profile dashboard up -d
     wait_for_health
     echo ""
     echo "Gateway running at http://127.0.0.1:18789"
-    echo "Community dashboard at http://127.0.0.1:3000"
     echo "BR dashboard at http://127.0.0.1:3001"
     ;;
   down)

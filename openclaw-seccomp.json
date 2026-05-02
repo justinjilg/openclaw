@@ -80,11 +80,34 @@
         "unlink", "unlinkat",
         "mkdir", "mkdirat", "rmdir",
         "chdir", "fchdir", "getcwd",
-        "chmod", "fchmodat",
+        "chmod", "fchmod", "fchmodat",
         "chown", "lchown",
         "umask",
+        "utimensat", "utimensat_time64", "utimes", "futimesat",
         "copy_file_range",
         "sendfile", "sendfile64", "splice", "tee"
+      ],
+      "action": "SCMP_ACT_ALLOW"
+    },
+    {
+      "comment": "Extended attributes — required by pnpm/copyfile during plugin runtime-dep staging (2026.4.29+)",
+      "names": [
+        "getxattr", "lgetxattr", "fgetxattr",
+        "setxattr", "lsetxattr", "fsetxattr",
+        "removexattr", "lremovexattr", "fremovexattr",
+        "listxattr", "llistxattr", "flistxattr"
+      ],
+      "action": "SCMP_ACT_ALLOW"
+    },
+    {
+      "comment": "I/O hints + space preallocation — libuv's uv_fs_copyfile calls posix_fadvise(SEQUENTIAL/NOREUSE) and (with COPYFILE_EXCL) fallocate. Without these, Node fs.copyFile returns EPERM despite copy_file_range being allowed.",
+      "names": [
+        "fadvise64", "fadvise64_64", "readahead",
+        "fallocate", "ftruncate64",
+        "preadv", "pwritev",
+        "eventfd", "epoll_pwait2",
+        "name_to_handle_at", "open_by_handle_at",
+        "pidfd_open", "pidfd_send_signal", "pidfd_getfd"
       ],
       "action": "SCMP_ACT_ALLOW"
     },

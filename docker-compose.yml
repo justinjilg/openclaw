@@ -18,7 +18,7 @@
 
 services:
   openclaw-gateway:
-    image: ghcr.io/openclaw/openclaw:2026.4.5
+    image: ghcr.io/openclaw/openclaw:2026.4.29
     container_name: openclaw-gateway
     restart: unless-stopped
     command: ["openclaw", "gateway", "--verbose"]
@@ -32,6 +32,12 @@ services:
       # Mount config + workspace to /home/node (container's node user home)
       - ${OPENCLAW_CONFIG_DIR}:/home/node/.openclaw
       - ${OPENCLAW_WORKSPACE:-./workspace}:/home/node/workspace
+      # Plugin runtime-deps cache lives on a Linux-native volume, not the macOS
+      # bind mount — pnpm hits EPERM on copyfile across Docker Desktop's file
+      # sharing for the per-version, per-plugin staging tree introduced in
+      # 2026.4.29. The cache is regeneratable; sessions/memories stay in the
+      # bind mount above.
+      - openclaw-plugin-runtime-deps:/home/node/.openclaw/plugin-runtime-deps
       # Cross-project read-only access (Phase 3: agent workforce)
       - ${PROJECTS_DIR:-~/Projects}:/home/node/projects:ro
 
@@ -101,40 +107,6 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  # --- Community Dashboard (tugcantopaloglu/openclaw-dashboard) ---
-  openclaw-dashboard:
-    # TODO: Pin by digest. Run `./scripts/pin-images.sh` when Docker is available.
-    image: ghcr.io/tugcantopaloglu/openclaw-dashboard:latest
-    container_name: openclaw-dashboard
-    restart: unless-stopped
-    profiles: ["dashboard"]
-    ports:
-      - "127.0.0.1:3000:3000"
-    environment:
-      - OPENCLAW_GATEWAY_URL=http://openclaw-gateway:18789
-      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
-      - DASHBOARD_MFA_ENABLED=true
-      - NODE_ENV=production
-    depends_on:
-      openclaw-gateway:
-        condition: service_healthy
-    user: "1000:1000"
-    cap_drop:
-      - ALL
-    security_opt:
-      - no-new-privileges:true
-      - seccomp:openclaw-seccomp.json
-    deploy:
-      resources:
-        limits:
-          memory: 512m
-          cpus: "0.5"
-    logging:
-      driver: json-file
-      options:
-        max-size: "5m"
-        max-file: "3"
-
   # --- Custom BR-Integrated Dashboard ---
   br-dashboard:
     # Pinned by digest (nginxinc/nginx-unprivileged:alpine as of 2026-04-10)
@@ -166,12 +138,13 @@ services:
         max-file: "3"
 
   openclaw-cli:
-    image: ghcr.io/openclaw/openclaw:2026.4.5
+    image: ghcr.io/openclaw/openclaw:2026.4.29
     container_name: openclaw-cli
     profiles: ["cli"]
     volumes:
       - ${OPENCLAW_CONFIG_DIR}:/home/node/.openclaw
       - ${OPENCLAW_WORKSPACE:-./workspace}:/home/node/workspace
+      - openclaw-plugin-runtime-deps:/home/node/.openclaw/plugin-runtime-deps
       - ${PROJECTS_DIR:-~/Projects}:/home/node/projects:ro
     environment:
       - HOME=/home/node
@@ -185,3 +158,9 @@ services:
     security_opt:
       - no-new-privileges:true
       - seccomp:openclaw-seccomp.json
+
+volumes:
+  openclaw-plugin-runtime-deps:
+    # Per-version pnpm cache. Linux-native to avoid macOS Docker Desktop
+    # bind-mount EPERM. Safe to delete with `docker compose down -v` — gateway
+    # will rebuild on next start.

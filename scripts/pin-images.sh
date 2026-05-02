@@ -18,7 +18,6 @@ if ! docker info &>/dev/null; then
 fi
 
 IMAGES=(
-  "ghcr.io/tugcantopaloglu/openclaw-dashboard:latest"
   "nginxinc/nginx-unprivileged:alpine"
 )
 
