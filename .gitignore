@@ -12,6 +12,36 @@ workspace/workspaces/*/daily-report-*.md
 workspace/workspaces/*/audit-log-*.md
 workspace/workspaces/*/research-*.md
 
+# Agent-generated scratch in per-agent workspaces — keep only identity files
+# (SOUL.md, MEMORY.md, HEARTBEAT.md, IDENTITY.md, AGENTS.md, BOOTSTRAP.md)
+workspace/workspaces/*/br_*.sh
+workspace/workspaces/*/br_*.py
+workspace/workspaces/*/br_*.json
+workspace/workspaces/*/br-*.md
+workspace/workspaces/*/brainstormrouter_*.md
+workspace/workspaces/*/bug_hunt_*
+workspace/workspaces/*/prometheus_*.sh
+workspace/workspaces/*/prometheus_*
+workspace/workspaces/*/prometheus-*
+workspace/workspaces/*/cache_*.log
+workspace/workspaces/*/strategic-plan.md
+workspace/workspaces/*/ai-search-competitive-analysis.md
+workspace/workspaces/*/oauth-research-results.md
+workspace/workspaces/*/research_*.md
+workspace/workspaces/*/research/
+workspace/workspaces/*/test-results/
+workspace/workspaces/*/automation/
+workspace/workspaces/*/skills/
+workspace/workspaces/*/memory/
+workspace/workspaces/*/dashboard-data.json
+workspace/workspaces/*/.openclaw/
+
+# Playwright MCP debug logs
+.playwright-mcp/
+
+# One-off sandbox scripts at repo root
+managed-agent-test.py
+
 # OS
 .DS_Store
 Thumbs.db

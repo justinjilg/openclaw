@@ -1,0 +1,412 @@
+{
+  "stream": "static-analysis",
+  "timestamp": "2026-04-09T00:00:00Z",
+  "project": "openclaw",
+  "path": "/Users/justin/Projects/openclaw",
+
+  "file_inventory": {
+    "total_loc": 3095,
+    "files_by_type": {
+      "shell_scripts": {
+        "count": 9,
+        "files": {
+          "start.sh": 196,
+          "scripts/bootstrap-agents.sh": 95,
+          "scripts/integration-test.sh": 85,
+          "scripts/pin-images.sh": 45,
+          "scripts/portkey-test.sh": 19,
+          "scripts/setup-dashboard.sh": 60,
+          "scripts/smoke-test.sh": 155,
+          "scripts/upload-souls.sh": 130,
+          "scripts/validate-docs.sh": 143
+        },
+        "total_loc": 928
+      },
+      "yaml_config": {
+        "count": 2,
+        "files": {
+          "docker-compose.yml": 187,
+          "gateway.yaml": 136
+        },
+        "total_loc": 323
+      },
+      "json_config": {
+        "count": 2,
+        "files": {
+          "openclaw-seccomp.json": 184,
+          "~/.openclaw/openclaw.json": 333
+        },
+        "total_loc": 517
+      },
+      "markdown_docs": {
+        "count": 13,
+        "files": {
+          "CLAUDE.md": 218,
+          "SOUL.md": 43,
+          "workspace/workspaces/main/SOUL.md": 531,
+          "workspace/workspaces/ops/SOUL.md": 71,
+          "workspace/workspaces/research/SOUL.md": 45,
+          "workspace/workspaces/dev/SOUL.md": 51,
+          "workspace/workspaces/admin/SOUL.md": 49,
+          "workspace/workspaces/ops/HEARTBEAT.md": 40,
+          "workspace/skills/brainstormrouter-ops/SKILL.md": 21,
+          "workspace/skills/dashboard-reporter/SKILL.md": 33,
+          "workspace/skills/br-stress-test/SKILL.md": 26
+        },
+        "total_loc": 1128
+      },
+      "html": {
+        "count": 1,
+        "files": {
+          "workspace/dashboard/index.html": 486
+        },
+        "total_loc": 486
+      },
+      "other": {
+        "count": 2,
+        "files": {
+          ".gitignore": 21,
+          ".env.example": 25
+        },
+        "total_loc": 46
+      }
+    },
+    "new_test_scripts": [
+      "scripts/smoke-test.sh",
+      "scripts/integration-test.sh",
+      "scripts/validate-docs.sh",
+      "scripts/pin-images.sh"
+    ]
+  },
+
+  "wiring_audit": {
+    "agent_souls": {
+      "expected": ["main", "ops", "research", "dev", "admin"],
+      "found": ["main", "ops", "research", "dev", "admin"],
+      "all_present": true,
+      "details": {
+        "main": "workspace/workspaces/main/SOUL.md (531 lines)",
+        "ops": "workspace/workspaces/ops/SOUL.md (71 lines)",
+        "research": "workspace/workspaces/research/SOUL.md (45 lines)",
+        "dev": "workspace/workspaces/dev/SOUL.md (51 lines)",
+        "admin": "workspace/workspaces/admin/SOUL.md (49 lines)"
+      }
+    },
+
+    "start_sh_commands": {
+      "all_commands": ["up", "up-dashboard", "down", "doctor", "test", "backup", "logs", "cli", "link-whatsapp"],
+      "new_commands": {
+        "test": "Runs smoke-test.sh (line 155-156)",
+        "link-whatsapp": "Re-link WhatsApp with QR scan (lines 171-191)"
+      },
+      "check_deps_function": {
+        "present": true,
+        "checks": ["op (1Password CLI)", "docker", "openssl", "curl", "docker daemon running"],
+        "location": "lines 19-34"
+      },
+      "wait_for_health_function": {
+        "present": true,
+        "mechanism": "Polls docker compose healthcheck status up to 30 iterations x 5s = 150s",
+        "location": "lines 37-50"
+      },
+      "env_lifecycle": {
+        "write": "write_env() creates .env with chmod 600 (line 100)",
+        "persist": ".env persists after 'up' for daemon auto-restarts (documented in comment lines 104-107)",
+        "cleanup": "rm -f $ENV_FILE on explicit './start.sh down' only (line 131)",
+        "cleanup_is_noop": false,
+        "documented_in_claude_md": true,
+        "claude_md_section": ".env Lifecycle (Security-Relevant) — lines 182-189"
+      },
+      "doctor_integrates_tests": true,
+      "doctor_runs": ["openclaw doctor", "openclaw security audit --deep", "openclaw clawhub audit", "openclaw --version", "scripts/smoke-test.sh", "scripts/validate-docs.sh"]
+    },
+
+    "skills": {
+      "count": 3,
+      "skills": [
+        {
+          "name": "brainstormrouter-ops",
+          "skill_md": true,
+          "executable_scripts": ["br-health.sh", "br-usage.sh", "br-agents.sh"],
+          "script_count": 3
+        },
+        {
+          "name": "dashboard-reporter",
+          "skill_md": true,
+          "executable_scripts": [],
+          "script_count": 0,
+          "note": "SKILL.md only, no executable scripts"
+        },
+        {
+          "name": "br-stress-test",
+          "skill_md": true,
+          "executable_scripts": ["br-stress-sweep.sh", "br-stress-burst.sh", "br-stress-failover.sh", "br-stress-report.sh"],
+          "script_count": 4
+        }
+      ],
+      "total_executable_scripts": 7
+    },
+
+    "test_validation_scripts": {
+      "smoke_test": {
+        "exists": true,
+        "path": "scripts/smoke-test.sh",
+        "loc": 155,
+        "checks": ["config syntax (docker-compose, seccomp, gateway)", "required files (6)", "agent SOULs (5)", "skills (3)", "no hardcoded secrets", ".env gitignored", "no :latest tags", "CLI projects mount :ro", "gateway read_only rootfs", "seccomp on all services", "script hygiene (set -euo pipefail)"],
+        "sections": 6
+      },
+      "integration_test": {
+        "exists": true,
+        "path": "scripts/integration-test.sh",
+        "loc": 85,
+        "checks": ["gateway health (docker healthcheck + curl)", "container state (Up)", "openclaw doctor", "version check"],
+        "sections": 4,
+        "requires_running_gateway": true
+      },
+      "validate_docs": {
+        "exists": true,
+        "path": "scripts/validate-docs.sh",
+        "loc": 143,
+        "checks": ["MCP tool counts per agent (5 agents)", "image version match", "agent models", "workspaceOnly enforcement", "gateway seccomp", "approvalMode enforcement"],
+        "sections": 4
+      },
+      "pin_images": {
+        "exists": true,
+        "path": "scripts/pin-images.sh",
+        "loc": 45,
+        "purpose": "Pull dashboard images, report sha256 digests for pinning"
+      }
+    },
+
+    "docker_hardening": {
+      "gateway_service": {
+        "image_pinned": "ghcr.io/openclaw/openclaw:2026.4.5",
+        "non_root": true,
+        "user": "1000:1000",
+        "cap_drop_all": true,
+        "no_new_privileges": true,
+        "seccomp": "openclaw-seccomp.json",
+        "read_only_rootfs": true,
+        "tmpfs": ["/tmp:size=128m,mode=1777", "/home/node/.cache:size=64m,mode=0700"],
+        "memory_limit": "2g",
+        "cpu_limit": "2.0",
+        "pid_limit": 256,
+        "ulimits_nproc": 256,
+        "log_rotation": {"max_size": "10m", "max_file": "3"},
+        "healthcheck": true,
+        "projects_mount_ro": true,
+        "loopback_binding": true,
+        "env_OPENCLAW_ALLOW_INSECURE_PRIVATE_WS": "false"
+      },
+      "dashboard_service": {
+        "image": "ghcr.io/tugcantopaloglu/openclaw-dashboard:latest",
+        "image_pinned": false,
+        "note": "TODO comment says to run pin-images.sh",
+        "non_root": true,
+        "cap_drop_all": true,
+        "no_new_privileges": true,
+        "seccomp": "openclaw-seccomp.json",
+        "memory_limit": "512m",
+        "cpu_limit": "0.5",
+        "loopback_binding": true
+      },
+      "br_dashboard_service": {
+        "image": "nginxinc/nginx-unprivileged@sha256:601c823234c474696ded03d619e67f1e59538802731543099c691aea67e4a553",
+        "image_pinned_by_digest": true,
+        "cap_drop_all": true,
+        "no_new_privileges": true,
+        "seccomp": "openclaw-seccomp.json",
+        "memory_limit": "128m",
+        "cpu_limit": "0.25",
+        "loopback_binding": true,
+        "volume_ro": true
+      },
+      "cli_service": {
+        "image_pinned": "ghcr.io/openclaw/openclaw:2026.4.5",
+        "non_root": true,
+        "cap_drop_all": true,
+        "no_new_privileges": true,
+        "seccomp": "openclaw-seccomp.json",
+        "projects_mount_ro": true
+      },
+      "seccomp_coverage": {
+        "services_with_seccomp": 4,
+        "services_total": 4,
+        "all_covered": true
+      }
+    }
+  },
+
+  "claude_md_accuracy": {
+    "mcp_tool_counts": {
+      "main": {"documented": 12, "actual": 12, "match": true},
+      "ops": {"documented": 15, "actual": 15, "match": true},
+      "research": {"documented": 7, "actual": 7, "match": true},
+      "dev": {"documented": 2, "actual": 2, "match": true},
+      "admin": {"documented": 11, "actual": 11, "match": true},
+      "all_match": true,
+      "verification_method": "validate-docs.sh automated check"
+    },
+    "approval_mode_documentation": {
+      "documented_as_global": true,
+      "actual_in_gateway_yaml": "exec.approvalMode: always (global, line 35)",
+      "claude_md_describes_correctly": true,
+      "relevant_claude_md_text": "exec.approvalMode: always is enforced globally in gateway.yaml (not per-agent). Every tool exec across every agent requires human approval.",
+      "previous_assessment_concern_resolved": true,
+      "note": "Previous assessment flagged approvalMode as per-agent in old docs. Now correctly documented as global."
+    },
+    "image_version": {
+      "claude_md": "ghcr.io/openclaw/openclaw:2026.4.5",
+      "docker_compose": "ghcr.io/openclaw/openclaw:2026.4.5",
+      "match": true
+    },
+    "agent_models": {
+      "main": {"documented": "moonshot/kimi-k2.5", "actual": "moonshot/kimi-k2.5", "match": true},
+      "ops": {"documented": "deepseek/deepseek-chat", "actual": "deepseek/deepseek-chat", "match": true},
+      "research": {"documented": "google/gemini-2.5-flash", "actual": "google/gemini-2.5-flash", "match": true},
+      "dev": {"documented": "anthropic/claude-sonnet-4-20250514", "actual": "anthropic/claude-sonnet-4-20250514", "match": true},
+      "admin": {"documented": "deepseek/deepseek-chat", "actual": "deepseek/deepseek-chat", "match": true},
+      "all_match": true
+    },
+    "cross_project_mount": {
+      "documented_as_ro": true,
+      "actual_ro_gateway": true,
+      "actual_ro_cli": true,
+      "match": true
+    },
+    "dashboard_image_pinning_note": {
+      "community_dashboard_latest": true,
+      "todo_comment_present": true,
+      "pin_images_script_exists": true,
+      "br_dashboard_pinned_by_digest": true
+    }
+  },
+
+  "secret_handling": {
+    "env_lifecycle": {
+      "created_by": "start.sh write_env() via 1Password CLI",
+      "chmod_600": true,
+      "gitignored": true,
+      "gitignore_entry": ".env (exact match in .gitignore)",
+      "persists_after_up": true,
+      "removed_on_down": true,
+      "removal_line": "start.sh line 131: rm -f \"$ENV_FILE\"",
+      "cleanup_env_function": "N/A — no separate function, inline rm -f in 'down' case",
+      "cleanup_is_noop": false,
+      "documented_lifecycle": true,
+      "lifecycle_docs_location": "CLAUDE.md '.env Lifecycle (Security-Relevant)' section (lines 182-189) AND start.sh comment (lines 104-107)"
+    },
+    "secrets_in_env": {
+      "count": 6,
+      "items": ["OPENCLAW_GATEWAY_TOKEN", "MOONSHOT_API_KEY", "BRAINSTORMROUTER_API_KEY", "BRAINSTORMROUTER_ADMIN_KEY", "DISCORD_BOT_TOKEN", "GITHUB_TOKEN"]
+    },
+    "no_hardcoded_secrets": true,
+    "env_file_exists_currently": true,
+    "env_file_permissions": "-rw-------"
+  },
+
+  "security_config": {
+    "gateway_yaml": {
+      "bind": "loopback",
+      "approval_mode": "always",
+      "dm_policy": "allowlist",
+      "dm_allowlist_empty_in_yaml": true,
+      "block_private_networks": true,
+      "skills_auto_install": false,
+      "skills_pin_versions": true,
+      "blocked_commands_count": 15,
+      "memory_provider": "local",
+      "logging_redact_messages": true,
+      "mcp_server_configured": true
+    },
+    "openclaw_json": {
+      "tools_fs_workspace_only": true,
+      "tools_exec_apply_patch_workspace_only": true,
+      "session_dm_scope": "per-channel-peer",
+      "channels_whatsapp_dm_policy": "allowlist",
+      "channels_discord_group_policy": "allowlist"
+    },
+    "seccomp_profile": {
+      "default_action": "SCMP_ACT_ERRNO",
+      "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_AARCH64"],
+      "syscall_groups": 13,
+      "applied_to_all_services": true
+    }
+  },
+
+  "smoke_test_output": {
+    "ran_successfully": true,
+    "result": "PASS",
+    "pass_count": 25,
+    "warn_count": 1,
+    "fail_count": 0,
+    "warnings": [":latest image tag found (community dashboard — should be pinned)"],
+    "notable_passes": [
+      "All 5 agent SOULs present",
+      "All 3 skills present",
+      "No hardcoded secrets",
+      ".env gitignored",
+      "CLI Projects mount read-only",
+      "Gateway has read_only rootfs",
+      "Seccomp applied to 4 services",
+      "All checked scripts use set -euo pipefail"
+    ]
+  },
+
+  "validate_docs_output": {
+    "ran_successfully": true,
+    "result": "DOCS IN SYNC",
+    "pass_count": 9,
+    "drift_count": 0,
+    "details": {
+      "mcp_counts_all_match": true,
+      "image_version_match": true,
+      "workspace_only_enforced": true,
+      "gateway_seccomp_present": true,
+      "approval_mode_global": true
+    }
+  },
+
+  "residual_issues": [
+    {
+      "severity": "low",
+      "category": "image-pinning",
+      "description": "Community dashboard image uses :latest tag (ghcr.io/tugcantopaloglu/openclaw-dashboard:latest). TODO comment exists. pin-images.sh script exists to resolve this.",
+      "file": "docker-compose.yml",
+      "line": 107
+    },
+    {
+      "severity": "info",
+      "category": "skill-scripts",
+      "description": "dashboard-reporter skill has SKILL.md but no executable scripts. May be template-only or instructions-only skill.",
+      "file": "workspace/skills/dashboard-reporter/SKILL.md"
+    },
+    {
+      "severity": "info",
+      "category": "env-persistence",
+      "description": ".env file currently exists on disk (641 bytes, chmod 600). This is expected if gateway is running. Documented behavior.",
+      "file": ".env"
+    }
+  ],
+
+  "summary": {
+    "total_files_analyzed": 26,
+    "total_loc": 3095,
+    "test_scripts_exist": 4,
+    "smoke_test_result": "PASS (25/25, 1 warning)",
+    "doc_validator_result": "DOCS IN SYNC (9/9, 0 drift)",
+    "all_5_agent_souls": true,
+    "all_9_start_sh_commands": true,
+    "check_deps_present": true,
+    "wait_for_health_present": true,
+    "read_only_rootfs": true,
+    "seccomp_on_all_4_services": true,
+    "cli_projects_mount_ro": true,
+    "env_cleanup_functional": true,
+    "env_lifecycle_documented": true,
+    "mcp_tool_counts_accurate": true,
+    "approval_mode_documented_correctly": true,
+    "no_hardcoded_secrets": true,
+    "gitignore_includes_env": true
+  }
+}
